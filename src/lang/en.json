@@ -1,0 +1,10 @@
+{
+  "appTitle": "worlds of todos.",
+  "_createSpace": {
+    "button": "Create",
+    "inputPlaceholder": "Create your world"
+  },
+  "_createTodo": {
+    "inputPlaceholder": "Add new todo"
+  }
+}
