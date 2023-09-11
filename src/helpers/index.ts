@@ -1,6 +1,1 @@
-export {
-  todoListAtom,
-  todoTextAtom,
-  getTodoListAtom,
-  setTodoListAtom,
-} from "./store";
+export { todoListAtom, todoTextAtom, todossAtom } from "./store";

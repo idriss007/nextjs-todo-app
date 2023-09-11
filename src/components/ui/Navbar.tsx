@@ -4,21 +4,15 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import en from "@/lang/en.json";
-import { getTodoListAtom, todoListAtom } from "@/helpers/store";
-import { useAtom } from "jotai";
 
 const Navbar = () => {
   const [theme, setTheme] = useState<string>();
 
-  const [, getTodoList] = useAtom(getTodoListAtom);
-  const [todos] = useAtom(todoListAtom);
-
   const router = useRouter();
 
   useEffect(() => {
-    getTodoList({ id: router.query.id });
     setTheme(localStorage.getItem("theme") || "light");
-  }, [theme, router.query.id]);
+  }, [theme]);
 
   const switchTheme = () => {
     if (localStorage.getItem("theme") === "dark") {

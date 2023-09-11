@@ -5,25 +5,16 @@ import en from "@/lang/en.json";
 import { MdAdd } from "react-icons/md";
 
 import { useAtom } from "jotai";
-import {
-  getTodoListAtom,
-  todoListAtom,
-  todoTextAtom,
-  setTodoListAtom,
-} from "@/helpers";
+import { todoTextAtom, todossAtom } from "@/helpers";
 
 const Page = () => {
   const router = useRouter();
   const spaceName = router.query.id;
 
   const [todo, setTodo] = useAtom(todoTextAtom);
-  const [todos] = useAtom(todoListAtom);
-  const [, getTodoList] = useAtom(getTodoListAtom);
-  const [, setTodoList] = useAtom(setTodoListAtom);
+  const [todos, setTodos] = useAtom(todossAtom(spaceName! as string));
 
   useEffect(() => {
-    getTodoList({ id: router.query.id });
-
     const worldNames = localStorage.getItem("todoWorldNames")?.split(",");
     const names = worldNames?.map((name) => name.trim());
 
@@ -35,25 +26,17 @@ const Page = () => {
         `${worldNames ? `${worldNames}, ${spaceName}` : `${spaceName}`}`
       );
     }
-  }, [spaceName]);
+  }, [router.query.id]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (
-      todo.length > 0 &&
-      localStorage.getItem(`todo_${spaceName}`) !== undefined
-    ) {
-      const editedTodo = { text: todo, completed: false };
-
-      const newTodos =
-        todos?.length > 0
-          ? JSON.stringify([...todos, editedTodo])
-          : JSON.stringify([editedTodo]);
-
-      localStorage.setItem(`todo_${spaceName}`, newTodos);
+    if (todo.length > 0 && todos !== undefined) {
+      localStorage.setItem(`todo_${spaceName}`, JSON.stringify(todos));
+      setTodos((prevValues) => {
+        return [...prevValues, { text: todo, completed: false }];
+      });
       setTodo("");
-      newTodos && setTodoList({ text: todo, completed: false });
     }
   };
 
