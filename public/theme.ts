@@ -1,3 +1,3 @@
-if (localStorage.getItem("theme") === "dark") {
+if (localStorage.getItem("darkMode") === "true") {
   document.documentElement.classList.add("dark");
 }

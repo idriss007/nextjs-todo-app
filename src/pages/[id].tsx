@@ -5,14 +5,14 @@ import en from "@/lang/en.json";
 import { MdAdd } from "react-icons/md";
 
 import { useAtom } from "jotai";
-import { todoTextAtom, todossAtom } from "@/helpers";
+import { todoTextAtom, todosAtom } from "@/helpers";
 
 const Page = () => {
   const router = useRouter();
-  const spaceName = router.query.id;
+  const spaceName = router.query.id! as string;
 
   const [todo, setTodo] = useAtom(todoTextAtom);
-  const [todos, setTodos] = useAtom(todossAtom(spaceName! as string));
+  const [todos, setTodos] = useAtom(todosAtom(spaceName));
 
   useEffect(() => {
     const worldNames = localStorage.getItem("todoWorldNames")?.split(",");
@@ -32,12 +32,18 @@ const Page = () => {
     e.preventDefault();
 
     if (todo.length > 0 && todos !== undefined) {
-      localStorage.setItem(`todo_${spaceName}`, JSON.stringify(todos));
       setTodos((prevValues) => {
-        return [...prevValues, { text: todo, completed: false }];
+        return [
+          ...prevValues,
+          { id: generateUniqeId(), text: todo, completed: false },
+        ];
       });
       setTodo("");
     }
+  };
+
+  const generateUniqeId = () => {
+    return Math.floor(Math.random() * Date.now());
   };
 
   if (!spaceName) {
@@ -54,14 +60,7 @@ const Page = () => {
         <div className="flex flex-col gap-0">
           {todos?.length > 0
             ? todos.map((todo, i) => {
-                return (
-                  <TodoItem
-                    setTodoList={"setTodoList"}
-                    key={i}
-                    todo={todo}
-                    todoId={i}
-                  />
-                );
+                return <TodoItem key={i} todo={todo} spaceName={spaceName} />;
               })
             : null}
         </div>

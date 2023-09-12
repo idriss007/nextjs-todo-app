@@ -1,29 +1,24 @@
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import Button from "../buttons/Button";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import en from "@/lang/en.json";
+import { darkModeAtom } from "@/helpers";
+import { useAtom } from "jotai";
 
 const Navbar = () => {
-  const [theme, setTheme] = useState<string>();
+  const [darkMode, setDarkMode] = useAtom(darkModeAtom);
 
   const router = useRouter();
 
-  useEffect(() => {
-    setTheme(localStorage.getItem("theme") || "light");
-  }, [theme]);
-
   const switchTheme = () => {
-    if (localStorage.getItem("theme") === "dark") {
-      localStorage.setItem("theme", "light");
+    if (darkMode) {
       document.documentElement.classList.remove("dark");
-      setTheme("Light");
+      setDarkMode(false);
       return;
     }
-    localStorage.setItem("theme", "dark");
-    setTheme("Dark");
     document.documentElement.classList.add("dark");
+    setDarkMode(true);
   };
 
   return (
@@ -37,7 +32,7 @@ const Navbar = () => {
       </div>
       <div className="flex-1 text-end">
         <Button padding="p-0" bgColor="inherit" hover="" onClick={switchTheme}>
-          {theme === "dark" ? (
+          {darkMode ? (
             <MdLightMode color="white" size={25} />
           ) : (
             <MdDarkMode color="black" size={25} />

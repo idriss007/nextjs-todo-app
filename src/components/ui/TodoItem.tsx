@@ -1,29 +1,25 @@
 import { TodoItem } from "@/types";
 import { MdOutlineDeleteForever, MdOutlineMode } from "react-icons/md";
 import Button from "../buttons/Button";
-import { useRouter } from "next/router";
+import { useAtom } from "jotai";
+import { todosAtom } from "@/helpers";
 
 type TodoItemProps = {
-  todoId?: number;
   todo: TodoItem;
-  setTodoList: any;
+  spaceName: string;
 };
 
 const TodoItem = (props: TodoItemProps) => {
-  const { todo, todoId, setTodoList } = props;
+  const { todo, spaceName } = props;
 
-  const router = useRouter();
-  const { id } = router.query;
+  const [todos, setTodos] = useAtom(todosAtom(spaceName));
 
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setTodoList((prevValue: TodoItem[]) => {
-      const newList = prevValue.filter((todo, key) => {
-        return key != todoId;
-      });
-      localStorage.setItem(`todo_${id}`, JSON.stringify(newList));
-
-      return newList;
-    });
+    setTodos((prevValue) =>
+      prevValue.filter((td) => {
+        return td.id !== todo.id;
+      })
+    );
   };
 
   return (
