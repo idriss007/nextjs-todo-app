@@ -12,6 +12,8 @@ type ButtonProps = {
   position?: string;
   type?: "button" | "submit";
   onClick?: any;
+  onMouseDown?: any;
+  disabled?: boolean;
 };
 
 const Button = (props: ButtonProps) => {

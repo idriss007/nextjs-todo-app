@@ -1,8 +1,9 @@
-import { Button, TodoItem } from "@/components";
+import { Button, ProgressBar, TodoItem } from "@/components";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import en from "@/lang/en.json";
 import { MdAdd } from "react-icons/md";
+import { TodoItem as TodoItemType } from "@/types";
 
 import { useAtom } from "jotai";
 import { todoTextAtom, todosAtom } from "@/helpers";
@@ -26,7 +27,29 @@ const Page = () => {
         `${worldNames ? `${worldNames}, ${spaceName}` : `${spaceName}`}`
       );
     }
-  }, [router.query.id]);
+  }, [spaceName]);
+
+  const handleEdit = (editedTodo: TodoItemType) => {
+    setTodos((prevValue) => {
+      return prevValue.map((td) => {
+        if (td.id === editedTodo.id) {
+          return editedTodo;
+        } else {
+          return td;
+        }
+      });
+    });
+  };
+
+  const handleDelete = (id: number) => {
+    setTodos((prevValue) => {
+      const updatedTodos = prevValue.filter((td) => {
+        return td.id !== id;
+      });
+      updatedTodos.forEach((td, i) => (td.position = i + 1));
+      return updatedTodos;
+    });
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,7 +58,12 @@ const Page = () => {
       setTodos((prevValues) => {
         return [
           ...prevValues,
-          { id: generateUniqeId(), text: todo, completed: false },
+          {
+            id: generateUniqeId(),
+            text: todo,
+            completed: false,
+            position: todos?.length ? todos.length + 1 : 1,
+          },
         ];
       });
       setTodo("");
@@ -56,11 +84,51 @@ const Page = () => {
 
   return (
     <div className="flex flex-col flex-1 justify-center items-center">
-      <div className="">
-        <div className="flex flex-col gap-0">
+      <div className="w-3/5">
+        <div className="mb-10">
+          <div className="flex justify-between">
+            <p>Progress</p>
+            <p>
+              {todos.length <= 0
+                ? "0%"
+                : `${Math.round(
+                    (todos.filter((todo) => todo.completed === true).length /
+                      todos.length) *
+                      100
+                  )}%`}
+            </p>
+          </div>
+          <ProgressBar
+            value={
+              todos.length <= 0
+                ? 0
+                : (todos.filter((todo) => todo.completed === true).length /
+                    todos.length) *
+                  100
+            }
+          />
+          <p className="text-end">
+            {`${todos.filter((todo) => todo.completed === true).length}/${
+              todos.length
+            }`}{" "}
+            completed
+          </p>
+        </div>
+        <div className=""></div>
+        <div className="flex flex-col gap-1">
           {todos?.length > 0
             ? todos.map((todo, i) => {
-                return <TodoItem key={i} todo={todo} spaceName={spaceName} />;
+                return (
+                  // <div draggable key={todo.id}>
+                  <TodoItem
+                    key={todo.id}
+                    todo={todo}
+                    spaceName={spaceName}
+                    handleEdit={handleEdit}
+                    handleDelete={handleDelete}
+                  />
+                  // </div>
+                );
               })
             : null}
         </div>

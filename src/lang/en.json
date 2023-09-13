@@ -6,5 +6,6 @@
   },
   "_createTodo": {
     "inputPlaceholder": "Add new todo"
-  }
+  },
+  "editConfirmationMessage": "Are you sure about editing todo?"
 }

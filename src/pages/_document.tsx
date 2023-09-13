@@ -8,7 +8,7 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-        <Script src="theme.ts" strategy="beforeInteractive" />
+        <Script src="theme.js" strategy="beforeInteractive" />
       </body>
     </Html>
   );
