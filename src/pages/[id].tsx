@@ -1,9 +1,8 @@
-import { Button, ProgressBar, TodoItem } from "@/components";
+import { Button, DraggableItems, ProgressBar, TodoItem } from "@/components";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import en from "@/lang/en.json";
 import { MdAdd } from "react-icons/md";
-import { TodoItem as TodoItemType } from "@/types";
 
 import { useAtom } from "jotai";
 import { todoTextAtom, todosAtom } from "@/helpers";
@@ -29,28 +28,6 @@ const Page = () => {
     }
   }, [spaceName]);
 
-  const handleEdit = (editedTodo: TodoItemType) => {
-    setTodos((prevValue) => {
-      return prevValue.map((td) => {
-        if (td.id === editedTodo.id) {
-          return editedTodo;
-        } else {
-          return td;
-        }
-      });
-    });
-  };
-
-  const handleDelete = (id: number) => {
-    setTodos((prevValue) => {
-      const updatedTodos = prevValue.filter((td) => {
-        return td.id !== id;
-      });
-      updatedTodos.forEach((td, i) => (td.position = i + 1));
-      return updatedTodos;
-    });
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -62,7 +39,7 @@ const Page = () => {
             id: generateUniqeId(),
             text: todo,
             completed: false,
-            position: todos?.length ? todos.length + 1 : 1,
+            // position: todos?.length ? todos.length + 1 : 1,
           },
         ];
       });
@@ -84,7 +61,7 @@ const Page = () => {
 
   return (
     <div className="flex flex-col flex-1 justify-center items-center">
-      <div className="w-3/5">
+      <div className="w-full md:w-3/5">
         <div className="mb-10">
           <div className="flex justify-between">
             <p>Progress</p>
@@ -114,23 +91,8 @@ const Page = () => {
             completed
           </p>
         </div>
-        <div className=""></div>
         <div className="flex flex-col gap-1">
-          {todos?.length > 0
-            ? todos.map((todo, i) => {
-                return (
-                  // <div draggable key={todo.id}>
-                  <TodoItem
-                    key={todo.id}
-                    todo={todo}
-                    spaceName={spaceName}
-                    handleEdit={handleEdit}
-                    handleDelete={handleDelete}
-                  />
-                  // </div>
-                );
-              })
-            : null}
+          <DraggableItems />
         </div>
         <form
           className="flex gap-5 md:gap-10 mt-4"
@@ -138,7 +100,7 @@ const Page = () => {
           onSubmit={handleSubmit}
         >
           <input
-            className="w-full p-2 dark:bg-neutral-600 outline outline-0 focus:outline-1
+            className="w-full p-2 dark:bg-black text-black dark:text-gray-300 placeholder:dark:text-gray-600 outline outline-0 focus:outline-1
           outline-indigo-600 border border-1 border-gray-400 focus:border-transparent rounded-sm"
             type="text"
             value={todo}

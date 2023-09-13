@@ -10,16 +10,16 @@ import {
 import Button from "../buttons/Button";
 import { useRef, useState } from "react";
 import en from "@/lang/en.json";
+import clsx from "clsx";
 
 type TodoItemProps = {
   todo: TodoItem;
-  spaceName: string;
   handleEdit: any;
   handleDelete: any;
 };
 
 const TodoItem = (props: TodoItemProps) => {
-  const { todo, spaceName, handleEdit, handleDelete } = props;
+  const { todo, handleEdit, handleDelete } = props;
 
   const [isEditing, setIsEditing] = useState(false);
   const [todoText, setTodoText] = useState(todo.text);
@@ -27,11 +27,12 @@ const TodoItem = (props: TodoItemProps) => {
   const ref = useRef<HTMLInputElement>(null);
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between flex-1">
       <div className="flex gap-1 w-full items-center">
-        <MdOutlineDragIndicator />
+        {/* <MdOutlineDragIndicator /> */}
         <Button
           bgColor={todo.completed ? "bg-green-500" : "bg-neutral-300"}
+          hover="hover:bg-neutral-500"
           padding="p-1"
           width="100%"
           onClick={() => {
@@ -44,7 +45,11 @@ const TodoItem = (props: TodoItemProps) => {
           />
         </Button>
         <input
-          className="dark:bg-neutral-600 ml-1 p-1 px-2"
+          // className="dark:bg-neutral-600 ml-1 p-1 px-2 w-full"
+          className={clsx(
+            "bg-inherit dark:bg-inherit ml-1 p-1 px-2 w-full",
+            `${isEditing ? "" : "todoInputNotInEditMode"}`
+          )}
           type="text"
           value={todoText}
           readOnly={!isEditing}
@@ -54,11 +59,15 @@ const TodoItem = (props: TodoItemProps) => {
           }}
         />
       </div>
-      <div className="flex">
+      <div className="flex gap-3">
         {isEditing ? (
           <Button
             padding="p-1"
-            hover=""
+            hover={`${
+              todo.text == todoText
+                ? ""
+                : "hover:bg-green-100 dark:hover:bg-green-950 hover:rounded-lg"
+            }`}
             bgColor=""
             disabled={todo.text == todoText}
             onClick={() => {
@@ -69,26 +78,27 @@ const TodoItem = (props: TodoItemProps) => {
             }}
           >
             <MdOutlineDone
+              className="text-lg"
               color={todo.text == todoText ? "#d4d4d8" : "#22c55e"}
             />
           </Button>
         ) : (
           <Button
             padding="p-1"
-            hover=""
+            hover="hover:bg-sky-100 dark:hover:bg-sky-950 hover:rounded-lg"
             bgColor=""
             onClick={() => {
               setIsEditing(true);
               ref.current?.focus();
             }}
           >
-            <MdOutlineMode color="#0ea5e9" />
+            <MdOutlineMode className="text-sky-500 dark:text-sky-400 text-lg" />
           </Button>
         )}
         {isEditing ? (
           <Button
             padding="p-1"
-            hover=""
+            hover="hover:bg-yellow-100 dark:hover:bg-yellow-950 hover:rounded-lg"
             bgColor=""
             onClick={() => {
               // if (confirm("Are you sure to exit edit mode?")) {
@@ -97,16 +107,20 @@ const TodoItem = (props: TodoItemProps) => {
               // }
             }}
           >
-            <MdOutlineClose color="#facc15" />
+            <MdOutlineClose className="text-lg text-yellow-400" />
           </Button>
         ) : (
           <Button
             padding="p-1"
-            hover=""
+            hover="hover:bg-red-100 dark:hover:bg-orange-950 hover:rounded-lg"
             bgColor=""
-            onClick={() => handleDelete(todo.id)}
+            onClick={() => {
+              if (confirm(en.deleteConfirmationMessage)) {
+                handleDelete(todo.id);
+              }
+            }}
           >
-            <MdOutlineDeleteForever color="#ef4444" />
+            <MdOutlineDeleteForever className="text-red-500 text-lg dark:text-red-400" />
           </Button>
         )}
       </div>

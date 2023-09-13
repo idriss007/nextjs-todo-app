@@ -7,5 +7,6 @@
   "_createTodo": {
     "inputPlaceholder": "Add new todo"
   },
-  "editConfirmationMessage": "Are you sure about editing todo?"
+  "editConfirmationMessage": "Are you sure about editing todo?",
+  "deleteConfirmationMessage": "Are you sure about deleteing todo?"
 }

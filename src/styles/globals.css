@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  /* .inputBgColor {
+    @apply bg-secondary dark:bg-primary;
+  }
+
+  .inputTextColor {
+    @apply text-primary dark:text-secondary
+  } */
+
+  .todoInputNotInEditMode {
+    @apply border-0 focus:outline-none
+  }
+
+  /* .todoInputInEditMode {
+    @apply bg-stone-400 !important
+  } */
+}
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
