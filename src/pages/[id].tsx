@@ -2,7 +2,7 @@ import { Button, DraggableItems, ProgressBar, TodoItem } from "@/components";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import en from "@/lang/en.json";
-import { MdAdd } from "react-icons/md";
+import { MdAdd, MdOutlineDeleteForever } from "react-icons/md";
 
 import { useAtom } from "jotai";
 import { todoTextAtom, todosAtom, todoWorldNamesAtom } from "@/helpers";
@@ -105,6 +105,23 @@ const Page = () => {
             </p>
           </div>
         )}
+        {/* <div className="text-end mx-4">
+          <Button
+            padding="p-2"
+            hover="hover:bg-red-100 dark:hover:bg-orange-950 hover:rounded-lg"
+            bgColor=""
+            // onClick={() => {
+            //   if (confirm(en.deleteConfirmationMessage)) {
+            //     handleDelete(todo.id);
+            //   }
+            // }}
+          >
+            <MdOutlineDeleteForever
+              size={25}
+              className="text-red-500 text-lg dark:text-red-400"
+            />
+          </Button>
+        </div> */}
         <div className="flex flex-col max-h-96 overflow-y-auto overflow-x-hidden">
           <DraggableItems />
         </div>

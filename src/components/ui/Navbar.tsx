@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import en from "@/lang/en.json";
 import { CircularProgress } from "@mui/material";
-import Popover from "../buttons/PopoverButton";
+import PopoverButton from "../buttons/PopoverButton";
 
 import { useAtom } from "jotai";
 import { darkModeAtom } from "@/helpers";
@@ -50,12 +50,12 @@ const Navbar = () => {
       </div>
       <div className="flex-1 flex justify-end items-center gap-4">
         {todoWorldNames.length > 0 && (
-          <Popover>
+          <PopoverButton>
             <MdReorder
               size={25}
               className={darkMode ? "text-white" : "text-black"}
             />
-          </Popover>
+          </PopoverButton>
         )}
 
         {/* <MdDensitySmall className={darkMode ? "text-white" : "text-black"} /> */}

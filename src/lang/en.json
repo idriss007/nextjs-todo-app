@@ -8,5 +8,6 @@
     "inputPlaceholder": "Add new to-do"
   },
   "editConfirmationMessage": "Are you sure about editing to-do?",
-  "deleteConfirmationMessage": "Are you sure about deleting to-do?"
+  "deleteConfirmationMessage": "Are you sure about deleting to-do?",
+  "deleteWorldConfirmationMessage": "Are you sure about deleting to-do world?"
 }
