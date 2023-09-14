@@ -89,7 +89,7 @@ const TodoItem = (props: TodoItemProps) => {
             bgColor=""
             onClick={() => {
               setIsEditing(true);
-              ref.current?.focus();
+              ref.current?.select();
             }}
           >
             <MdOutlineMode className="text-sky-500 dark:text-sky-400 text-lg" />

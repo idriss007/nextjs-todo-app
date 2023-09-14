@@ -6,6 +6,7 @@ import { MdAdd } from "react-icons/md";
 
 import { useAtom } from "jotai";
 import { todoTextAtom, todosAtom } from "@/helpers";
+import { LinearProgress } from "@mui/material";
 
 const Page = () => {
   const router = useRouter();
@@ -51,10 +52,16 @@ const Page = () => {
     return Math.floor(Math.random() * Date.now());
   };
 
+  // return (
+  //   <div className="h-screen w-full md:w-3/5 flex flex-col p-10 m-auto">
+  //     <LinearProgress color="inherit" />
+  //   </div>
+  // );
+
   if (!spaceName) {
     return (
-      <div className="h-screen flex flex-col justify-center items-center">
-        Loading...
+      <div className="h-screen w-full md:w-3/5 flex flex-col justify-center m-auto">
+        <LinearProgress color="inherit" />
       </div>
     );
   }
@@ -62,40 +69,43 @@ const Page = () => {
   return (
     <div className="flex flex-col flex-1 justify-center items-center">
       <div className="w-full md:w-3/5">
-        <div className="mb-10">
-          <div className="flex justify-between">
-            <p>Progress</p>
-            <p>
-              {todos.length <= 0
-                ? "0%"
-                : `${Math.round(
-                    (todos.filter((todo) => todo.completed === true).length /
+        {todos.length > 0 && (
+          <div className="mb-10">
+            <div className="flex justify-between">
+              <p>Progress</p>
+              <p>
+                {todos.length <= 0
+                  ? "0%"
+                  : `${Math.round(
+                      (todos.filter((todo) => todo.completed === true).length /
+                        todos.length) *
+                        100
+                    )}%`}
+              </p>
+            </div>
+
+            <ProgressBar
+              value={
+                todos.length <= 0
+                  ? 0
+                  : (todos.filter((todo) => todo.completed === true).length /
                       todos.length) *
-                      100
-                  )}%`}
+                    100
+              }
+            />
+            <p className="text-end">
+              {`${todos.filter((todo) => todo.completed === true).length}/${
+                todos.length
+              }`}{" "}
+              completed
             </p>
           </div>
-          <ProgressBar
-            value={
-              todos.length <= 0
-                ? 0
-                : (todos.filter((todo) => todo.completed === true).length /
-                    todos.length) *
-                  100
-            }
-          />
-          <p className="text-end">
-            {`${todos.filter((todo) => todo.completed === true).length}/${
-              todos.length
-            }`}{" "}
-            completed
-          </p>
-        </div>
-        <div className="flex flex-col gap-1">
+        )}
+        <div className="flex flex-col gap-1 max-h-96 overflow-y-auto scrollOnMobile">
           <DraggableItems />
         </div>
         <form
-          className="flex gap-5 md:gap-10 mt-4"
+          className="flex gap-5 md:gap-3 mt-4"
           action=""
           onSubmit={handleSubmit}
         >

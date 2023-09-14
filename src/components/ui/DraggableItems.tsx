@@ -24,10 +24,14 @@ function DraggableItems() {
   const router = useRouter();
   const spaceName = router.query.id! as string;
 
+  const [activeItemId, setActiveItemId] = useState(null);
+
   const [todos, setTodos] = useAtom(todosAtom(spaceName));
 
   function handleDragEnd(event: any) {
     const { active, over } = event;
+
+    setActiveItemId(null);
 
     if (active.id !== over.id) {
       setTodos((prevValue: TodoItemType[]) => {
@@ -37,6 +41,11 @@ function DraggableItems() {
         return arrayMove(prevValue, activeIndex, overIndex);
       });
     }
+  }
+
+  function handleDragStart(event: any) {
+    const { active } = event;
+    setActiveItemId(active.id);
   }
 
   const handleEdit = (editedTodo: TodoItemType) => {
@@ -66,14 +75,16 @@ function DraggableItems() {
       //   modifiers={[restrictToParentElement]}
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
+      onDragStart={handleDragStart}
     >
-      <div>
+      <div className="flex flex-col overflow-x-auto scrollOnMobile">
         <SortableContext items={todos} strategy={verticalListSortingStrategy}>
           {todos.map((td) => (
             <SortableItem
               key={td.id}
               id={td.id}
               handle={true}
+              activeItemId={activeItemId}
               value={
                 <TodoItem
                   key={td.id}
