@@ -20,9 +20,9 @@ function SortableItem(props: any) {
 
   return (
     //@ts-ignore
-    <div className="flex" ref={setNodeRef} style={style}>
+    <div className="flex gap-1" ref={setNodeRef} style={style}>
       <button {...listeners} {...attributes}>
-        <MdOutlineDragIndicator />
+        <MdOutlineDragIndicator size={22} />
       </button>
       {props.value}
     </div>

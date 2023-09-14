@@ -1,12 +1,12 @@
 {
-  "appTitle": "worlds of todos.",
+  "appTitle": "worlds of to-dos.",
   "_createSpace": {
     "button": "Create",
     "inputPlaceholder": "Create your world"
   },
   "_createTodo": {
-    "inputPlaceholder": "Add new todo"
+    "inputPlaceholder": "Add new to-do"
   },
-  "editConfirmationMessage": "Are you sure about editing todo?",
-  "deleteConfirmationMessage": "Are you sure about deleteing todo?"
+  "editConfirmationMessage": "Are you sure about editing to-do?",
+  "deleteConfirmationMessage": "Are you sure about deleting to-do?"
 }

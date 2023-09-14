@@ -71,7 +71,7 @@ function DraggableItems() {
       onDragEnd={handleDragEnd}
       onDragStart={handleDragStart}
     >
-      <div className="">
+      <div className="flex flex-col gap-1">
         <SortableContext items={todos} strategy={verticalListSortingStrategy}>
           {todos.map((td) => (
             <SortableItem

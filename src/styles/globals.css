@@ -13,7 +13,9 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply rounded-md bg-stone-600
+    background-color: gray;
+    border-radius: 5px;
+    /* @apply rounded-md bg-stone-600 */
   }
 
   ::-webkit-scrollbar-thumb:hover {

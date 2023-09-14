@@ -76,7 +76,7 @@ const Page = () => {
     <div className="flex flex-col flex-1 justify-center items-center">
       <div className="w-full md:w-3/5">
         {todos.length > 0 && (
-          <div className="mb-10">
+          <div className="mb-10 leading-8">
             <div className="flex justify-between">
               <p>Progress</p>
               <p>
@@ -89,7 +89,6 @@ const Page = () => {
                     )}%`}
               </p>
             </div>
-
             <ProgressBar
               value={
                 todos.length <= 0
@@ -102,12 +101,11 @@ const Page = () => {
             <p className="text-end">
               {`${todos.filter((todo) => todo.completed === true).length}/${
                 todos.length
-              }`}{" "}
-              completed
+              } completed`}
             </p>
           </div>
         )}
-        <div className="flex flex-col gap-1 max-h-96 overflow-y-auto overflow-x-hidden">
+        <div className="flex flex-col max-h-96 overflow-y-auto overflow-x-hidden">
           <DraggableItems />
         </div>
         <form

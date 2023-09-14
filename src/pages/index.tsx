@@ -55,7 +55,9 @@ export default function Home() {
           placeholder={en._createSpace.inputPlaceholder}
         />
 
-        <Button type="submit">{en._createSpace.button}</Button>
+        <Button height="h-full" type="submit">
+          {en._createSpace.button}
+        </Button>
       </form>
     </div>
   );
