@@ -27,7 +27,7 @@ const TodoItem = (props: TodoItemProps) => {
   const ref = useRef<HTMLInputElement>(null);
 
   return (
-    <div className="flex items-center justify-between flex-1">
+    <div className="flex items-center justify-between flex-1 touch-auto overflow-auto">
       <div className="flex gap-1 w-full items-center">
         {/* <MdOutlineDragIndicator /> */}
         <Button

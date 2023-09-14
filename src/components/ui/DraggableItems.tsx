@@ -72,12 +72,12 @@ function DraggableItems() {
 
   return (
     <DndContext
-      //   modifiers={[restrictToParentElement]}
+      modifiers={[restrictToParentElement]}
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
       onDragStart={handleDragStart}
     >
-      <div className="max-h-full overflow-auto scrollOnMobile">
+      <div className="">
         <SortableContext items={todos} strategy={verticalListSortingStrategy}>
           {todos.map((td) => (
             <SortableItem
