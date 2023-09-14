@@ -77,7 +77,9 @@ function DraggableItems() {
       onDragEnd={handleDragEnd}
       onDragStart={handleDragStart}
     >
-      <div className="flex flex-col overflow-x-auto scrollOnMobile">
+      <div
+      // className="flex flex-col overflow-x-auto"
+      >
         <SortableContext items={todos} strategy={verticalListSortingStrategy}>
           {todos.map((td) => (
             <SortableItem

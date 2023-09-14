@@ -101,7 +101,7 @@ const Page = () => {
             </p>
           </div>
         )}
-        <div className="flex flex-col gap-1 max-h-96 overflow-y-auto scrollOnMobile">
+        <div className="flex flex-col gap-1 max-h-96 overflow-x-auto overflow-y-auto">
           <DraggableItems />
         </div>
         <form
