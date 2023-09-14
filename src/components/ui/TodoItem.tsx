@@ -69,7 +69,7 @@ const TodoItem = (props: TodoItemProps) => {
         <textarea
           // className="dark:bg-neutral-600 ml-1 p-1 px-2 w-full"
           className={clsx(
-            "bg-inherit dark:bg-inherit m-1 p-1 px-2 w-full resize-none",
+            "bg-inherit dark:bg-inherit m-1 p-1 px-2 w-full resize-none overflow-hidden",
             `${isEditing ? "" : "todoInputNotInEditMode"}`
           )}
           // type=""

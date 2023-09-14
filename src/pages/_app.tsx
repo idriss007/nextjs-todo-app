@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <div
       className={clsx(
         inter.className,
-        "p-10 min-h-screen h-screen flex bg-white dark:bg-black dark:text-white text-black overflow-hidden"
+        "p-4 md:p-7 min-h-screen h-screen flex bg-white dark:bg-black dark:text-white text-black overflow-hidden"
       )}
     >
       <div className="w-full md:w-2/3 ml-auto mr-auto flex flex-col">
