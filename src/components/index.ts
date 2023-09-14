@@ -5,3 +5,4 @@ export { default as TodoItem } from "./ui/TodoItem";
 export { default as ProgressBar } from "./ui/ProgressBar";
 export { default as DraggableItems } from "./ui/DraggableItems";
 export { default as SortableItem } from "./ui/SortableItem";
+export { default as PopoverButton } from "./buttons/PopoverButton";

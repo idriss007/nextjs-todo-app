@@ -5,7 +5,7 @@ import en from "@/lang/en.json";
 import { MdAdd } from "react-icons/md";
 
 import { useAtom } from "jotai";
-import { todoTextAtom, todosAtom } from "@/helpers";
+import { todoTextAtom, todosAtom, todoWorldNamesAtom } from "@/helpers";
 import { LinearProgress } from "@mui/material";
 
 const Page = () => {
@@ -13,19 +13,25 @@ const Page = () => {
   const spaceName = router.query.id! as string;
 
   const [todo, setTodo] = useAtom(todoTextAtom);
+  const [todoWorldNames, setTodoWorldNames] = useAtom(todoWorldNamesAtom);
   const [todos, setTodos] = useAtom(todosAtom(spaceName));
 
   useEffect(() => {
-    const worldNames = localStorage.getItem("todoWorldNames")?.split(",");
-    const names = worldNames?.map((name) => name.trim());
-
-    const isExist = names?.find((name) => name === (spaceName as string));
+    const isExist = todoWorldNames.find((name) => name === spaceName);
 
     if (!isExist && spaceName !== undefined) {
-      localStorage.setItem(
-        "todoWorldNames",
-        `${worldNames ? `${worldNames}, ${spaceName}` : `${spaceName}`}`
-      );
+      setTodoWorldNames((prevValues: string[]) => {
+        if (prevValues.length <= 0) {
+          return [spaceName];
+        } else {
+          const isWorldExist = prevValues.includes(spaceName);
+          if (!isWorldExist) {
+            return [...prevValues, spaceName.trim()];
+          } else {
+            return [...prevValues];
+          }
+        }
+      });
     }
   }, [spaceName]);
 
@@ -101,7 +107,7 @@ const Page = () => {
             </p>
           </div>
         )}
-        <div className="flex flex-col gap-1 max-h-96 overflow-y-auto">
+        <div className="flex flex-col gap-1 max-h-96 overflow-y-auto overflow-x-hidden">
           <DraggableItems />
         </div>
         <form

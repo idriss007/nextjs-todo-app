@@ -6,13 +6,7 @@ import {
 } from "@dnd-kit/sortable";
 import { useState } from "react";
 import SortableItem from "./SortableItem";
-import {
-  restrictToWindowEdges,
-  restrictToVerticalAxis,
-  restrictToHorizontalAxis,
-  restrictToFirstScrollableAncestor,
-  restrictToParentElement,
-} from "@dnd-kit/modifiers";
+import { restrictToParentElement } from "@dnd-kit/modifiers";
 import { TodoItem as TodoItemType } from "@/types";
 import TodoItem from "./TodoItem";
 import { useRouter } from "next/router";

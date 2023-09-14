@@ -9,3 +9,8 @@ export const todoTextAtom = atom<string>("");
 export const todosAtom = atomFamily((slug: string) => {
   return atomWithStorage<TodoItem[]>(`todo_${slug}`, []);
 });
+
+export const todoWorldNamesAtom = atomWithStorage<string[]>(
+  "todoWorldNames",
+  []
+);

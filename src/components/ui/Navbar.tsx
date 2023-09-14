@@ -1,14 +1,24 @@
-import { MdDarkMode, MdLightMode } from "react-icons/md";
+import {
+  MdDarkMode,
+  MdDensityMedium,
+  MdDensitySmall,
+  MdLightMode,
+  MdReorder,
+} from "react-icons/md";
 import Button from "../buttons/Button";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import en from "@/lang/en.json";
-import { darkModeAtom } from "@/helpers";
-import { useAtom } from "jotai";
 import { CircularProgress } from "@mui/material";
+import Popover from "../buttons/PopoverButton";
+
+import { useAtom } from "jotai";
+import { darkModeAtom } from "@/helpers";
+import { todoWorldNamesAtom } from "@/helpers";
 
 const Navbar = () => {
   const [darkMode, setDarkMode] = useAtom(darkModeAtom);
+  const [todoWorldNames, setTodoWorldNames] = useAtom(todoWorldNamesAtom);
 
   const router = useRouter();
 
@@ -38,7 +48,18 @@ const Navbar = () => {
             />
           ))}
       </div>
-      <div className="flex-1 flex justify-end items-center">
+      <div className="flex-1 flex justify-end items-center gap-4">
+        {todoWorldNames.length > 0 && (
+          <Popover>
+            <MdReorder
+              size={25}
+              className={darkMode ? "text-white" : "text-black"}
+            />
+          </Popover>
+        )}
+
+        {/* <MdDensitySmall className={darkMode ? "text-white" : "text-black"} /> */}
+
         <Button padding="p-0" bgColor="inherit" hover="" onClick={switchTheme}>
           {darkMode ? (
             <MdLightMode color="white" size={25} />
