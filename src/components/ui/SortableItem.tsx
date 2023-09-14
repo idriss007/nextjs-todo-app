@@ -19,6 +19,7 @@ function SortableItem(props: any) {
   };
 
   return (
+    //@ts-ignore
     <div ref={setNodeRef} style={style}>
       <div className="flex">
         <button {...listeners} {...attributes}>
