@@ -14,6 +14,7 @@ type ButtonProps = {
   onClick?: any;
   onMouseDown?: any;
   disabled?: boolean;
+  className?: string;
 };
 
 const Button = (props: ButtonProps) => {
@@ -28,6 +29,7 @@ const Button = (props: ButtonProps) => {
     children,
     position,
     type = "button",
+    className,
     ...rest
   } = props;
 
@@ -41,7 +43,8 @@ const Button = (props: ButtonProps) => {
         height,
         width,
         hover,
-        position
+        position,
+        className
       )}
       type={type}
       {...rest}

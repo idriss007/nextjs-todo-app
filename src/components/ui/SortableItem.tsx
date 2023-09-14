@@ -6,9 +6,16 @@ function SortableItem(props: any) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
 
+  const selectedItemsStyle = {
+    position: props.activeItemId === props.id ? "relative" : undefined,
+    zIndex: props.activeItemId === props.id ? "10" : undefined,
+  };
+
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    touchAction: "none",
+    ...selectedItemsStyle,
   };
 
   return (

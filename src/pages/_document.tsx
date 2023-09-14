@@ -4,11 +4,12 @@ import Script from "next/script";
 export default function Document() {
   return (
     <Html lang="en">
-      <Head />
+      <Head>
+        <Script src="theme.tsx" strategy="beforeInteractive" />
+      </Head>
       <body>
         <Main />
         <NextScript />
-        <Script src="theme.js" strategy="beforeInteractive" />
       </body>
     </Html>
   );
