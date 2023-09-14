@@ -8,25 +8,21 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  /* width */
-  ::-webkit-scrollbar {
+  /* ::-webkit-scrollbar {
     @apply rounded-sm w-2
   }
 
-  /* Track */
   ::-webkit-scrollbar-track {
     @apply bg-inherit rounded-md
   }
 
-  /* Handle */
   ::-webkit-scrollbar-thumb {
     @apply rounded-md bg-stone-600
   }
 
-  /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-slate-500;
-  }
+  } */
 
   /* .inputBgColor {
     @apply bg-secondary dark:bg-primary;
