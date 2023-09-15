@@ -119,7 +119,7 @@ const Page = () => {
             </p>
           </div>
         )}
-        <div className="flex flex-col max-h-96 overflow-y-auto overflow-x-hidden">
+        <div className="flex flex-col max-h-72 md:max-h-96 overflow-y-auto overflow-x-hidden">
           <DraggableItems />
         </div>
         <form

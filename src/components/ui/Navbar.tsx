@@ -45,7 +45,7 @@ const Navbar = () => {
     <div className="flex w-full justify-between items-center">
       <CreateWorldModal open={openModal} handleClose={handleClose} />
       <Link className="font-bold flex-1" href={"/"}>
-        {en.appTitle}
+        <p>{en.appTitle}</p>
       </Link>
       <div className="flex-1 w-1/3 whitespace-nowrap flex justify-center items-center">
         {router.pathname !== "/" &&
@@ -66,12 +66,12 @@ const Navbar = () => {
             additionalFields={
               <Button
                 className="flex justify-center items-center"
-                hover=""
+                hover="dark:hover:bg-stone-500 hover:bg-stone-200"
                 width="w-full"
                 rounded="rounded-t-none"
                 padding="py-2 px-4"
-                textColor="text-lime-300 hover:text-green-600"
-                bgColor="bg-stone-700 hover:bg-stone-200"
+                textColor="text-lime-300 hover:text-green-500"
+                bgColor="bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-200"
                 onClick={handleOpen}
               >
                 <MdAdd />

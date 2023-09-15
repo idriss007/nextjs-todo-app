@@ -65,12 +65,14 @@ export default function PopoverButton(props: PopoverButtonProps) {
               <div className="flex flex-col">
                 {todoWorldNames.map((todoWorld, i) => (
                   <div
-                    className={clsx("flex hover:bg-stone-200 hover:text-black")}
+                    className={clsx(
+                      "flex hover:bg-stone-200 hover:text-black text-white bg-stone-800 dark:bg-stone-800 dark:hover:bg-stone-200"
+                    )}
                     key={i}
                   >
                     <Button
                       bgColor="inherit"
-                      textColor="text-white hover:text-black"
+                      textColor=""
                       // width="100%"
                       padding="py-2 px-4"
                       hover=""
@@ -81,8 +83,8 @@ export default function PopoverButton(props: PopoverButtonProps) {
                       <p className="truncate">{todoWorld}</p>
                     </Button>
                     <Button
-                      bgColor="inherit"
-                      textColor="text-white hover:text-black"
+                      bgColor=""
+                      textColor=""
                       height="h-auto"
                       padding="py-2 px-4"
                       hover="hover:text-red-500"
