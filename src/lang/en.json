@@ -1,5 +1,6 @@
 {
   "appTitle": "worlds of to-dos.",
+  "appDesc": "Create your own special to-dos world",
   "_createSpace": {
     "button": "Create",
     "inputPlaceholder": "Create your world"
@@ -7,7 +8,12 @@
   "_createTodo": {
     "inputPlaceholder": "Add new to-do"
   },
+  "_todoWorld": {
+    "progressBar": "Progress",
+    "toDo": "To-Do"
+  },
   "editConfirmationMessage": "Are you sure about editing to-do?",
   "deleteConfirmationMessage": "Are you sure about deleting to-do?",
-  "deleteWorldConfirmationMessage": "Are you sure about deleting to-do world?"
+  "deleteWorldConfirmationMessage": "Are you sure about deleting to-do world?",
+  "deleteAllTodosConfirmationMessage": "Are you sure about deleting all to-dos?"
 }

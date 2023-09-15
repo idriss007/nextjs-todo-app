@@ -5,24 +5,27 @@ import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
 import Button from "./Button";
 
 import { useAtom } from "jotai";
-import { todoWorldNamesAtom } from "@/helpers";
+import { todoWorldNamesAtom, todosAtom } from "@/helpers";
 import { useRouter } from "next/router";
 import { ThemeProvider, createTheme } from "@mui/material";
-import { MdOutlineDeleteForever } from "react-icons/md";
+import { MdAdd, MdOutlineDeleteForever } from "react-icons/md";
 import en from "@/lang/en.json";
+import { RESET } from "jotai/utils";
+import clsx from "clsx";
 
 type PopoverButtonProps = {
   children: any;
+  additionalFields?: any;
 };
 
 export default function PopoverButton(props: PopoverButtonProps) {
-  const { children } = props;
+  const { children, additionalFields } = props;
 
   const router = useRouter();
+  const spaceName = router.query.id as string;
 
   const [todoWorldNames, setTodoWorldNames] = useAtom(todoWorldNamesAtom);
-
-  const { id } = router.query;
+  const [todos, setTodos] = useAtom(todosAtom(spaceName));
 
   const theme = createTheme({
     components: {
@@ -59,29 +62,32 @@ export default function PopoverButton(props: PopoverButtonProps) {
               }}
             >
               {/* <Typography sx={{ p: 2 }}>The content of the Popover.</Typography> */}
-              <div className="bg-stone-700 flex flex-col">
+              <div className="flex flex-col">
                 {todoWorldNames.map((todoWorld, i) => (
-                  <div className="flex" key={i}>
+                  <div
+                    className={clsx("flex hover:bg-stone-200 hover:text-black")}
+                    key={i}
+                  >
                     <Button
-                      bgColor={id === todoWorld ? "bg-stone-400" : "inherit"}
-                      textColor="text-white hover:text-black dark:text-white dark:hover:text-black"
+                      bgColor="inherit"
+                      textColor="text-white hover:text-black"
                       // width="100%"
                       padding="py-2 px-4"
-                      hover="hover:bg-stone-200"
+                      hover=""
                       rounded="rounded-none"
-                      className="flex-1"
+                      className="flex-1 max-w-[100px]"
                       onClick={() => router.push(`/${todoWorld}`)}
                     >
-                      <p>{todoWorld}</p>
+                      <p className="truncate">{todoWorld}</p>
                     </Button>
                     <Button
-                      bgColor={id === todoWorld ? "bg-stone-400" : "inherit"}
-                      textColor="text-white hover:text-black dark:text-white dark:hover:text-black"
+                      bgColor="inherit"
+                      textColor="text-white hover:text-black"
                       height="h-auto"
                       padding="py-2 px-4"
-                      hover="hover:bg-red-200"
+                      hover="hover:text-red-500"
                       rounded="rounded-none"
-                      className="flex-1 flex flex-col justify-center items-center max-w-[20px]"
+                      className="flex-1 flex flex-col justify-center items-center max-w-[20px] text-lg"
                       onClick={() => {
                         if (confirm(en.deleteWorldConfirmationMessage)) {
                           setTodoWorldNames((prevValue) => {
@@ -90,14 +96,16 @@ export default function PopoverButton(props: PopoverButtonProps) {
                             );
                             return updatedTodoWorlds;
                           });
-                          id === todoWorld ? router.push("/") : null;
+                          setTodos(RESET);
+                          spaceName === todoWorld ? router.push("/") : null;
                         }
                       }}
                     >
-                      <MdOutlineDeleteForever className="text-red-500 text-lg dark:text-red-400" />
+                      <MdOutlineDeleteForever />
                     </Button>
                   </div>
                 ))}
+                {spaceName ? additionalFields : null}
               </div>
             </Popover>
           </div>

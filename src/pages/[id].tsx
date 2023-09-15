@@ -1,4 +1,4 @@
-import { Button, DraggableItems, ProgressBar, TodoItem } from "@/components";
+import { Button, DraggableItems, ProgressBar } from "@/components";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import en from "@/lang/en.json";
@@ -7,6 +7,7 @@ import { MdAdd, MdOutlineDeleteForever } from "react-icons/md";
 import { useAtom } from "jotai";
 import { todoTextAtom, todosAtom, todoWorldNamesAtom } from "@/helpers";
 import { LinearProgress } from "@mui/material";
+import { RESET } from "jotai/utils";
 
 const Page = () => {
   const router = useRouter();
@@ -46,7 +47,6 @@ const Page = () => {
             id: generateUniqeId(),
             text: todo,
             completed: false,
-            // position: todos?.length ? todos.length + 1 : 1,
           },
         ];
       });
@@ -58,11 +58,11 @@ const Page = () => {
     return Math.floor(Math.random() * Date.now());
   };
 
-  // return (
-  //   <div className="h-screen w-full md:w-3/5 flex flex-col p-10 m-auto">
-  //     <LinearProgress color="inherit" />
-  //   </div>
-  // );
+  const deleteAllTodos = () => {
+    if (confirm(en.deleteAllTodosConfirmationMessage)) {
+      setTodos(RESET);
+    }
+  };
 
   if (!spaceName) {
     return (
@@ -75,10 +75,24 @@ const Page = () => {
   return (
     <div className="flex flex-col flex-1 justify-center items-center">
       <div className="w-full md:w-3/5">
+        <div className="font-bold flex justify-between items-center">
+          <p className="text-2xl">{en._todoWorld.toDo}</p>
+          <Button
+            hover=""
+            padding="p-2"
+            rounded="rounded-lg"
+            bgColor="hover:bg-red-100 dark:hover:bg-red-950"
+            textColor="text-red-600 dark:text-red-400"
+            onClick={deleteAllTodos}
+          >
+            <MdOutlineDeleteForever className="text-2xl" />
+          </Button>
+        </div>
+        <hr className="border-gray-200 dark:border-stone-700 my-2" />
         {todos.length > 0 && (
-          <div className="mb-10 leading-8">
+          <div className="mb-4 leading-8">
             <div className="flex justify-between">
-              <p>Progress</p>
+              <p>{en._todoWorld.progressBar}</p>
               <p>
                 {todos.length <= 0
                   ? "0%"
@@ -105,23 +119,6 @@ const Page = () => {
             </p>
           </div>
         )}
-        {/* <div className="text-end mx-4">
-          <Button
-            padding="p-2"
-            hover="hover:bg-red-100 dark:hover:bg-orange-950 hover:rounded-lg"
-            bgColor=""
-            // onClick={() => {
-            //   if (confirm(en.deleteConfirmationMessage)) {
-            //     handleDelete(todo.id);
-            //   }
-            // }}
-          >
-            <MdOutlineDeleteForever
-              size={25}
-              className="text-red-500 text-lg dark:text-red-400"
-            />
-          </Button>
-        </div> */}
         <div className="flex flex-col max-h-96 overflow-y-auto overflow-x-hidden">
           <DraggableItems />
         </div>

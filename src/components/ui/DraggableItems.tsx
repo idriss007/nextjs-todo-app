@@ -1,4 +1,4 @@
-import { DndContext, closestCenter } from "@dnd-kit/core";
+import { DndContext, DragOverlay, closestCenter } from "@dnd-kit/core";
 import {
   arrayMove,
   SortableContext,
@@ -6,7 +6,6 @@ import {
 } from "@dnd-kit/sortable";
 import { useState } from "react";
 import SortableItem from "./SortableItem";
-import { restrictToParentElement } from "@dnd-kit/modifiers";
 import { TodoItem as TodoItemType } from "@/types";
 import TodoItem from "./TodoItem";
 import { useRouter } from "next/router";
@@ -59,14 +58,12 @@ function DraggableItems() {
       const updatedTodos = prevValue.filter((td) => {
         return td.id !== id;
       });
-      //   updatedTodos.forEach((td, i) => (td.position = i + 1));
       return updatedTodos;
     });
   };
 
   return (
     <DndContext
-      modifiers={[restrictToParentElement]}
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
       onDragStart={handleDragStart}
@@ -90,6 +87,16 @@ function DraggableItems() {
             />
           ))}
         </SortableContext>
+        <DragOverlay>
+          {activeItemId ? (
+            <TodoItem
+              key={activeItemId}
+              todo={todos.find((todo) => todo.id === activeItemId)!}
+              handleEdit={handleEdit}
+              handleDelete={handleDelete}
+            />
+          ) : null}
+        </DragOverlay>
       </div>
     </DndContext>
   );

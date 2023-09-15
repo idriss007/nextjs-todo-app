@@ -1,10 +1,8 @@
 import { TodoItem } from "@/types";
 import {
-  MdCheckCircleOutline,
   MdOutlineClose,
-  MdOutlineDeleteForever,
+  MdOutlineDeleteOutline,
   MdOutlineDone,
-  MdOutlineDragIndicator,
   MdOutlineMode,
 } from "react-icons/md";
 import Button from "../buttons/Button";
@@ -35,7 +33,7 @@ const TodoItem = (props: TodoItemProps) => {
   }, [ref, todoText]);
 
   return (
-    <div className="flex items-center justify-between flex-1 touch-auto overflow-auto">
+    <div className="flex items-center justify-between flex-1 touch-auto overflow-y-auto overflow-x-hidden">
       <div className="flex gap-1 w-full items-center">
         {/* <MdOutlineDragIndicator /> */}
         <Button
@@ -52,20 +50,6 @@ const TodoItem = (props: TodoItemProps) => {
             color="white"
           />
         </Button>
-        {/* <input
-          // className="dark:bg-neutral-600 ml-1 p-1 px-2 w-full"
-          className={clsx(
-            "bg-inherit dark:bg-inherit m-1 p-1 px-2 w-full",
-            `${isEditing ? "" : "todoInputNotInEditMode"}`
-          )}
-          type="text"
-          value={todoText}
-          readOnly={!isEditing}
-          ref={ref}
-          onChange={(e: React.FormEvent<HTMLInputElement>) => {
-            setTodoText((e.target as HTMLInputElement).value);
-          }}
-        /> */}
         <textarea
           // className="dark:bg-neutral-600 ml-1 p-1 px-2 w-full"
           className={clsx(
@@ -139,7 +123,7 @@ const TodoItem = (props: TodoItemProps) => {
         ) : (
           <Button
             padding="p-2"
-            hover="hover:bg-red-100 dark:hover:bg-orange-950 hover:rounded-lg"
+            hover="hover:bg-red-100 dark:hover:bg-red-950 hover:rounded-lg"
             bgColor=""
             onClick={() => {
               if (confirm(en.deleteConfirmationMessage)) {
@@ -147,7 +131,7 @@ const TodoItem = (props: TodoItemProps) => {
               }
             }}
           >
-            <MdOutlineDeleteForever className="text-red-500 text-lg dark:text-red-400" />
+            <MdOutlineDeleteOutline className="text-red-500 text-lg dark:text-red-400" />
           </Button>
         )}
       </div>

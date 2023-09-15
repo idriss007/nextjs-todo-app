@@ -5,7 +5,7 @@
 @layer base {
 
   ::-webkit-scrollbar {
-    @apply rounded-sm w-2 block
+    @apply rounded-sm w-2 block h-2
   }
 
   ::-webkit-scrollbar-track {
@@ -20,43 +20,7 @@
     @apply bg-slate-500;
   }
 
-  /* .inputBgColor {
-    @apply bg-secondary dark:bg-primary;
-  }
-
-  .inputTextColor {
-    @apply text-primary dark:text-secondary
-  } */
-
   .todoInputNotInEditMode {
     @apply border-0 focus:outline-none
   }
-
-  /* .todoInputInEditMode {
-    @apply bg-stone-400 !important
-  } */
 }
-
-/* :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-} */

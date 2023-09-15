@@ -1,4 +1,5 @@
 import {
+  MdAdd,
   MdDarkMode,
   MdDensityMedium,
   MdDensitySmall,
@@ -11,6 +12,8 @@ import Link from "next/link";
 import en from "@/lang/en.json";
 import { CircularProgress } from "@mui/material";
 import PopoverButton from "../buttons/PopoverButton";
+import { useState, useEffect } from "react";
+import { CreateWorldModal } from "@/components";
 
 import { useAtom } from "jotai";
 import { darkModeAtom } from "@/helpers";
@@ -19,6 +22,12 @@ import { todoWorldNamesAtom } from "@/helpers";
 const Navbar = () => {
   const [darkMode, setDarkMode] = useAtom(darkModeAtom);
   const [todoWorldNames, setTodoWorldNames] = useAtom(todoWorldNamesAtom);
+
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpen = () => setOpenModal(true);
+  const handleClose = () => setOpenModal(false);
+
+  useEffect(() => {}, [openModal]);
 
   const router = useRouter();
 
@@ -34,13 +43,16 @@ const Navbar = () => {
 
   return (
     <div className="flex w-full justify-between items-center">
+      <CreateWorldModal open={openModal} handleClose={handleClose} />
       <Link className="font-bold flex-1" href={"/"}>
         {en.appTitle}
       </Link>
-      <div className="flex-1 flex justify-center items-center">
+      <div className="flex-1 w-1/3 whitespace-nowrap flex justify-center items-center">
         {router.pathname !== "/" &&
           (router.query.id ? (
-            router.query.id
+            <p className="text-xl break-keep overflow-auto">
+              {router.query.id}
+            </p>
           ) : (
             <CircularProgress
               size={25}
@@ -50,7 +62,23 @@ const Navbar = () => {
       </div>
       <div className="flex-1 flex justify-end items-center gap-4">
         {todoWorldNames.length > 0 && (
-          <PopoverButton>
+          <PopoverButton
+            additionalFields={
+              <Button
+                className="flex justify-center items-center"
+                hover=""
+                width="w-full"
+                rounded="rounded-t-none"
+                padding="py-2 px-4"
+                textColor="text-lime-300 hover:text-green-600"
+                bgColor="bg-stone-700 hover:bg-stone-200"
+                onClick={handleOpen}
+              >
+                <MdAdd />
+                <p>New world</p>
+              </Button>
+            }
+          >
             <MdReorder
               size={25}
               className={darkMode ? "text-white" : "text-black"}
