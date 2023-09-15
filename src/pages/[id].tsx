@@ -73,7 +73,7 @@ const Page = () => {
   }
 
   return (
-    <div className="flex flex-col flex-1 justify-center items-center">
+    <div className="flex flex-col flex-1 items-center mt-5">
       <div className="w-full md:w-3/5">
         <div className="font-bold flex justify-between items-center">
           <p className="text-2xl">{en._todoWorld.toDo}</p>
@@ -89,37 +89,37 @@ const Page = () => {
           </Button>
         </div>
         <hr className="border-gray-200 dark:border-stone-700 my-2" />
-        {todos.length > 0 && (
-          <div className="mb-4 leading-8">
-            <div className="flex justify-between">
-              <p>{en._todoWorld.progressBar}</p>
-              <p>
-                {todos.length <= 0
-                  ? "0%"
-                  : `${Math.round(
-                      (todos.filter((todo) => todo.completed === true).length /
-                        todos.length) *
-                        100
-                    )}%`}
-              </p>
-            </div>
-            <ProgressBar
-              value={
-                todos.length <= 0
-                  ? 0
-                  : (todos.filter((todo) => todo.completed === true).length /
+        {/* {todos.length > 0 && ( */}
+        <div className="mb-4 leading-8">
+          <div className="flex justify-between">
+            <p>{en._todoWorld.progressBar}</p>
+            <p>
+              {todos.length <= 0
+                ? "0%"
+                : `${Math.round(
+                    (todos.filter((todo) => todo.completed === true).length /
                       todos.length) *
-                    100
-              }
-            />
-            <p className="text-end">
-              {`${todos.filter((todo) => todo.completed === true).length}/${
-                todos.length
-              } completed`}
+                      100
+                  )}%`}
             </p>
           </div>
-        )}
-        <div className="flex flex-col max-h-72 md:max-h-96 overflow-y-auto overflow-x-hidden">
+          <ProgressBar
+            value={
+              todos.length <= 0
+                ? 0
+                : (todos.filter((todo) => todo.completed === true).length /
+                    todos.length) *
+                  100
+            }
+          />
+          <p className="text-end">
+            {`${todos.filter((todo) => todo.completed === true).length}/${
+              todos.length
+            } completed`}
+          </p>
+        </div>
+        {/* )} */}
+        <div className="flex flex-col max-h-72 md:max-h-96 h-72 md:h-96 overflow-y-auto overflow-x-hidden">
           <DraggableItems />
         </div>
         <form
