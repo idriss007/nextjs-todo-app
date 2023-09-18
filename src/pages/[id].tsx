@@ -1,11 +1,11 @@
 import { Button, DraggableItems, ProgressBar } from "@/components";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import en from "@/lang/en.json";
 import { MdAdd, MdOutlineDeleteForever } from "react-icons/md";
 
 import { useAtom } from "jotai";
-import { todoTextAtom, todosAtom, todoWorldNamesAtom } from "@/helpers";
+import { todosAtom, todoWorldNamesAtom } from "@/helpers";
 import { LinearProgress } from "@mui/material";
 import { RESET } from "jotai/utils";
 
@@ -13,11 +13,25 @@ const Page = () => {
   const router = useRouter();
   const spaceName = router.query.id! as string;
 
-  const [todo, setTodo] = useAtom(todoTextAtom);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [todo, setTodo] = useState("");
   const [todoWorldNames, setTodoWorldNames] = useAtom(todoWorldNamesAtom);
   const [todos, setTodos] = useAtom(todosAtom(spaceName));
 
+  const boxRef = useRef<HTMLDivElement>(null);
+
+  const completedTodosRatio = useMemo(() => {
+    return Math.round(
+      (todos.filter((todo) => todo.completed === true).length / todos.length) *
+        100
+    );
+  }, [todos]);
+
   useEffect(() => {
+    if (isScrolled) {
+      boxRef.current?.scrollIntoView({ behavior: "instant" });
+      setIsScrolled(false);
+    }
     const isExist = todoWorldNames.find((name) => name === spaceName);
 
     if (!isExist && spaceName !== undefined) {
@@ -34,12 +48,14 @@ const Page = () => {
         }
       });
     }
-  }, [spaceName]);
+  }, [spaceName, isScrolled]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (todo.length > 0 && todos !== undefined) {
+    const normalizedTodoText = todo.trim();
+
+    if (normalizedTodoText.length > 0 && normalizedTodoText !== undefined) {
       setTodos((prevValues) => {
         return [
           ...prevValues,
@@ -51,6 +67,7 @@ const Page = () => {
         ];
       });
       setTodo("");
+      setIsScrolled(true);
     }
   };
 
@@ -93,25 +110,9 @@ const Page = () => {
         <div className="mb-4 leading-8">
           <div className="flex justify-between">
             <p>{en._todoWorld.progressBar}</p>
-            <p>
-              {todos.length <= 0
-                ? "0%"
-                : `${Math.round(
-                    (todos.filter((todo) => todo.completed === true).length /
-                      todos.length) *
-                      100
-                  )}%`}
-            </p>
+            <p>{todos.length <= 0 ? "0%" : `${completedTodosRatio}%`}</p>
           </div>
-          <ProgressBar
-            value={
-              todos.length <= 0
-                ? 0
-                : (todos.filter((todo) => todo.completed === true).length /
-                    todos.length) *
-                  100
-            }
-          />
+          <ProgressBar value={todos.length <= 0 ? 0 : completedTodosRatio} />
           <p className="text-end">
             {`${todos.filter((todo) => todo.completed === true).length}/${
               todos.length
@@ -121,6 +122,7 @@ const Page = () => {
         {/* )} */}
         <div className="flex flex-col max-h-72 md:max-h-96 h-72 md:h-96 overflow-y-auto overflow-x-hidden">
           <DraggableItems />
+          <div ref={boxRef} />
         </div>
         <form
           className="flex gap-5 md:gap-3 mt-4"

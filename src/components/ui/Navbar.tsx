@@ -42,7 +42,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex w-full justify-between items-center">
+    <div className="flex w-full justify-between items-center min-h-[40px] max-h-[40px]">
       <CreateWorldModal open={openModal} handleClose={handleClose} />
       <Link className="font-bold flex-1" href={"/"}>
         <p>{en.appTitle}</p>

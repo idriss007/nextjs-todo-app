@@ -50,21 +50,32 @@ const TodoItem = (props: TodoItemProps) => {
             color="white"
           />
         </Button>
-        <textarea
-          // className="dark:bg-neutral-600 ml-1 p-1 px-2 w-full"
-          className={clsx(
-            "bg-inherit dark:bg-inherit m-1 p-1 px-2 w-full resize-none overflow-hidden",
-            `${isEditing ? "" : "todoInputNotInEditMode"}`
-          )}
-          // type=""
-          value={todoText}
-          rows={1}
-          readOnly={!isEditing}
-          ref={ref}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            setTodoText((e.target as HTMLTextAreaElement).value);
-          }}
-        />
+        {isEditing ? (
+          <textarea
+            // className="dark:bg-neutral-600 ml-1 p-1 px-2 w-full"
+            className={clsx(
+              "bg-inherit dark:bg-inherit m-1 p-1 px-2 w-full resize-none overflow-hidden",
+              `${isEditing ? "" : "todoInputNotInEditMode"}`
+            )}
+            // type=""
+            value={todoText}
+            rows={1}
+            readOnly={!isEditing}
+            ref={ref}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+              setTodoText((e.target as HTMLTextAreaElement).value);
+            }}
+          />
+        ) : (
+          <p
+            className={clsx(
+              "bg-inherit dark:bg-inherit m-1 p-1 px-2 w-full resize-none overflow-hidden",
+              `${isEditing ? "" : "todoInputNotInEditMode"}`
+            )}
+          >
+            {todoText}
+          </p>
+        )}
       </div>
       <div className="flex gap-1 mx-2">
         {isEditing ? (

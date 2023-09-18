@@ -1,5 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { useRef } from "react";
 import { MdOutlineDragIndicator } from "react-icons/md";
 
 function SortableItem(props: any) {

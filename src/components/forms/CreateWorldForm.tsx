@@ -58,7 +58,7 @@ const CreateWorldForm = (props: CreateWorldFormProps) => {
         />
 
         <Button
-          height="h-full"
+          height="h-auto"
           bgColor={router.query.id ? "bg-black" : undefined}
           textColor={router.query.id ? "text-white" : undefined}
           hover={router.query.id ? "hover:bg-stone-800" : undefined}

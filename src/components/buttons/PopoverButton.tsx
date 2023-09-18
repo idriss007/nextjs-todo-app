@@ -46,8 +46,13 @@ export default function PopoverButton(props: PopoverButtonProps) {
     <ThemeProvider theme={theme}>
       <PopupState variant="popover" popupId="demo-popup-popover">
         {(popupState) => (
-          <div>
-            <Button bgColor="inherit" hover="" {...bindTrigger(popupState)}>
+          <div className="flex justify-center items-center">
+            <Button
+              padding="p-0"
+              bgColor="inherit"
+              hover=""
+              {...bindTrigger(popupState)}
+            >
               {children}
             </Button>
             <Popover
