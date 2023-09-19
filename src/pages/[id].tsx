@@ -1,4 +1,9 @@
-import { Button, DraggableItems, ProgressBar } from "@/components";
+import {
+  Button,
+  DraggableItems,
+  ProgressBar,
+  WorldSetttingsPopover,
+} from "@/components";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import en from "@/lang/en.json";
@@ -92,9 +97,9 @@ const Page = () => {
   return (
     <div className="flex flex-col flex-1 items-center mt-5">
       <div className="w-full md:w-3/5">
-        <div className="font-bold flex justify-between items-center">
-          <p className="text-2xl">{en._todoWorld.toDo}</p>
-          <Button
+        <div className="flex justify-between items-center">
+          <p className="font-bold text-2xl">{en._todoWorld.toDo}</p>
+          {/* <Button
             hover=""
             padding="p-2"
             rounded="rounded-lg"
@@ -103,11 +108,14 @@ const Page = () => {
             onClick={deleteAllTodos}
           >
             <MdOutlineDeleteForever className="text-2xl" />
-          </Button>
+          </Button> */}
+          <WorldSetttingsPopover
+            setTodos={setTodos}
+            setTodoWorldNames={setTodoWorldNames}
+          />
         </div>
         <hr className="border-gray-200 dark:border-stone-700 my-2" />
-        {/* {todos.length > 0 && ( */}
-        <div className="mb-4 leading-8">
+        <div className="mb-4 leading-8 select-none">
           <div className="flex justify-between">
             <p>{en._todoWorld.progressBar}</p>
             <p>{todos.length <= 0 ? "0%" : `${completedTodosRatio}%`}</p>

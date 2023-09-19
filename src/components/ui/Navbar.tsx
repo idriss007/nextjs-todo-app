@@ -1,35 +1,22 @@
-import {
-  MdAdd,
-  MdDarkMode,
-  MdDensityMedium,
-  MdDensitySmall,
-  MdLightMode,
-  MdReorder,
-} from "react-icons/md";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
 import Button from "../buttons/Button";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import en from "@/lang/en.json";
 import { CircularProgress } from "@mui/material";
-import PopoverButton from "../buttons/PopoverButton";
-import { useState, useEffect } from "react";
-import { CreateWorldModal } from "@/components";
+import { WorldsPopover } from "@/components";
 
 import { useAtom } from "jotai";
-import { darkModeAtom } from "@/helpers";
+import { darkModeAtom, todosAtom } from "@/helpers";
 import { todoWorldNamesAtom } from "@/helpers";
 
 const Navbar = () => {
+  const router = useRouter();
+  const spaceName = router.query.id as string;
+
   const [darkMode, setDarkMode] = useAtom(darkModeAtom);
   const [todoWorldNames, setTodoWorldNames] = useAtom(todoWorldNamesAtom);
-
-  const [openModal, setOpenModal] = useState(false);
-  const handleOpen = () => setOpenModal(true);
-  const handleClose = () => setOpenModal(false);
-
-  useEffect(() => {}, [openModal]);
-
-  const router = useRouter();
+  const [todos, setTodos] = useAtom(todosAtom(spaceName));
 
   const switchTheme = () => {
     if (darkMode) {
@@ -43,16 +30,13 @@ const Navbar = () => {
 
   return (
     <div className="flex w-full justify-between items-center min-h-[40px] max-h-[40px]">
-      <CreateWorldModal open={openModal} handleClose={handleClose} />
       <Link className="font-bold flex-1" href={"/"}>
         <p>{en.appTitle}</p>
       </Link>
       <div className="flex-1 w-1/3 whitespace-nowrap flex justify-center items-center">
         {router.pathname !== "/" &&
-          (router.query.id ? (
-            <p className="text-xl break-keep overflow-auto">
-              {router.query.id}
-            </p>
+          (spaceName ? (
+            <p className="text-xl break-keep overflow-auto">{spaceName}</p>
           ) : (
             <CircularProgress
               size={25}
@@ -61,32 +45,7 @@ const Navbar = () => {
           ))}
       </div>
       <div className="flex-1 flex justify-end items-center gap-4">
-        {todoWorldNames.length > 0 && (
-          <PopoverButton
-            additionalFields={
-              <Button
-                className="flex justify-center items-center"
-                hover="dark:hover:bg-stone-500 hover:bg-stone-200"
-                width="w-full"
-                rounded="rounded-t-none"
-                padding="py-2 px-4"
-                textColor="text-lime-300 hover:text-green-500"
-                bgColor="bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-200"
-                onClick={handleOpen}
-              >
-                <MdAdd />
-                <p>New world</p>
-              </Button>
-            }
-          >
-            <MdReorder
-              size={25}
-              className={darkMode ? "text-white" : "text-black"}
-            />
-          </PopoverButton>
-        )}
-
-        {/* <MdDensitySmall className={darkMode ? "text-white" : "text-black"} /> */}
+        {todoWorldNames.length > 0 && <WorldsPopover setTodos={setTodos} />}
 
         <Button padding="p-0" bgColor="inherit" hover="" onClick={switchTheme}>
           {darkMode ? (
