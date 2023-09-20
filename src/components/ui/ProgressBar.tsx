@@ -12,7 +12,7 @@ const ProgressBar = (props: ProgressBarProps) => {
         <label>{label}</label>
         <span className="value">{value}%</span>
       </div>
-      <div className="h-[9px] rounded-md bg-gray-200 dark:bg-gray-800">
+      <div className="h-[9px] rounded-md bg-gray-200 dark:bg-gray-800 overflow-hidden">
         <div
           className="h-[9px] rounded-md bg-sky-500"
           style={{ width: value + "%", transition: "width .3s" }}
