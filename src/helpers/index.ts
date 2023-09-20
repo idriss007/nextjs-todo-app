@@ -1,6 +1,2 @@
-export {
-  todoTextAtom,
-  todosAtom,
-  darkModeAtom,
-  todoWorldNamesAtom,
-} from "./store";
+export { todosAtom, darkModeAtom, todoWorldNamesAtom } from "./store";
+export { generateUniqeId } from "./todoFunctions";

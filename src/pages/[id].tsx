@@ -1,23 +1,42 @@
-import { Button, DraggableItems, ProgressBar } from "@/components";
+import {
+  Button,
+  CircularLoadingSpinner,
+  DraggableItems,
+  ProgressBar,
+} from "@/components";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import en from "@/lang/en.json";
-import { MdAdd, MdOutlineDeleteForever } from "react-icons/md";
+import { MdAdd } from "react-icons/md";
 
 import { useAtom } from "jotai";
-import { todoTextAtom, todosAtom, todoWorldNamesAtom } from "@/helpers";
-import { LinearProgress } from "@mui/material";
-import { RESET } from "jotai/utils";
+import { generateUniqeId, todosAtom, todoWorldNamesAtom } from "@/helpers";
+import sanitizeHtml from "sanitize-html";
+import { WorldSetttingsPopover } from "@/partials";
 
 const Page = () => {
   const router = useRouter();
   const spaceName = router.query.id! as string;
 
-  const [todo, setTodo] = useAtom(todoTextAtom);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [todo, setTodo] = useState("");
   const [todoWorldNames, setTodoWorldNames] = useAtom(todoWorldNamesAtom);
   const [todos, setTodos] = useAtom(todosAtom(spaceName));
 
+  const boxRef = useRef<HTMLDivElement>(null);
+
+  const completedTodosRatio = useMemo(() => {
+    return Math.round(
+      (todos.filter((todo) => todo.completed === true).length / todos.length) *
+        100
+    );
+  }, [todos]);
+
   useEffect(() => {
+    if (isScrolled) {
+      boxRef.current?.scrollIntoView({ behavior: "instant" });
+      setIsScrolled(false);
+    }
     const isExist = todoWorldNames.find((name) => name === spaceName);
 
     if (!isExist && spaceName !== undefined) {
@@ -34,12 +53,14 @@ const Page = () => {
         }
       });
     }
-  }, [spaceName]);
+  }, [spaceName, isScrolled]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (todo.length > 0 && todos !== undefined) {
+    const normalizedTodoText = todo.trim();
+
+    if (normalizedTodoText.length > 0 && normalizedTodoText !== undefined) {
       setTodos((prevValues) => {
         return [
           ...prevValues,
@@ -51,23 +72,14 @@ const Page = () => {
         ];
       });
       setTodo("");
-    }
-  };
-
-  const generateUniqeId = () => {
-    return Math.floor(Math.random() * Date.now());
-  };
-
-  const deleteAllTodos = () => {
-    if (confirm(en.deleteAllTodosConfirmationMessage)) {
-      setTodos(RESET);
+      setIsScrolled(true);
     }
   };
 
   if (!spaceName) {
     return (
-      <div className="h-screen w-full md:w-3/5 flex flex-col justify-center m-auto">
-        <LinearProgress color="inherit" />
+      <div className="h-screen w-full flex flex-col justify-center items-center">
+        <CircularLoadingSpinner />
       </div>
     );
   }
@@ -75,42 +87,19 @@ const Page = () => {
   return (
     <div className="flex flex-col flex-1 items-center mt-5">
       <div className="w-full md:w-3/5">
-        <div className="font-bold flex justify-between items-center">
-          <p className="text-2xl">{en._todoWorld.toDo}</p>
-          <Button
-            hover=""
-            padding="p-2"
-            rounded="rounded-lg"
-            bgColor="hover:bg-red-100 dark:hover:bg-red-950"
-            textColor="text-red-600 dark:text-red-400"
-            onClick={deleteAllTodos}
-          >
-            <MdOutlineDeleteForever className="text-2xl" />
-          </Button>
+        <div className="flex justify-between items-center">
+          <p className="font-bold text-2xl">{en._todoWorld.toDo}</p>
+          <WorldSetttingsPopover
+            todos={todos}
+            setTodos={setTodos}
+            setTodoWorldNames={setTodoWorldNames}
+          />
         </div>
         <hr className="border-gray-200 dark:border-stone-700 my-2" />
-        {/* {todos.length > 0 && ( */}
-        <div className="mb-4 leading-8">
-          <div className="flex justify-between">
-            <p>{en._todoWorld.progressBar}</p>
-            <p>
-              {todos.length <= 0
-                ? "0%"
-                : `${Math.round(
-                    (todos.filter((todo) => todo.completed === true).length /
-                      todos.length) *
-                      100
-                  )}%`}
-            </p>
-          </div>
+        <div className="mb-4 leading-8 select-none">
           <ProgressBar
-            value={
-              todos.length <= 0
-                ? 0
-                : (todos.filter((todo) => todo.completed === true).length /
-                    todos.length) *
-                  100
-            }
+            label="Progress"
+            value={todos.length <= 0 ? 0 : completedTodosRatio}
           />
           <p className="text-end">
             {`${todos.filter((todo) => todo.completed === true).length}/${
@@ -118,9 +107,9 @@ const Page = () => {
             } completed`}
           </p>
         </div>
-        {/* )} */}
         <div className="flex flex-col max-h-72 md:max-h-96 h-72 md:h-96 overflow-y-auto overflow-x-hidden">
           <DraggableItems />
+          <div ref={boxRef} />
         </div>
         <form
           className="flex gap-5 md:gap-3 mt-4"
@@ -134,7 +123,7 @@ const Page = () => {
             value={todo}
             placeholder={en._createTodo.inputPlaceholder}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              setTodo((e.target as HTMLInputElement).value)
+              setTodo(sanitizeHtml((e.target as HTMLInputElement).value))
             }
           />
           <Button

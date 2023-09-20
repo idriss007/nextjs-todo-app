@@ -22,49 +22,61 @@ const TodoItem = (props: TodoItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [todoText, setTodoText] = useState(todo.text);
 
-  const ref = useRef<HTMLTextAreaElement>(null);
+  const ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (ref.current) {
-      ref.current.style.height = "0px";
-      const scrollHeight = ref.current?.scrollHeight;
-      ref.current.style.height = scrollHeight + "px";
+      ref.current.select();
+      // ref.current.style.height = "0px";
+      // const scrollHeight = ref.current?.scrollHeight;
+      // ref.current.style.height = scrollHeight + "px";
     }
-  }, [ref, todoText]);
+  }, [ref, isEditing]);
 
   return (
     <div className="flex items-center justify-between flex-1 touch-auto overflow-y-auto overflow-x-hidden">
       <div className="flex gap-1 w-full items-center">
-        {/* <MdOutlineDragIndicator /> */}
-        <Button
-          bgColor={todo.completed ? "bg-green-500" : "bg-neutral-300"}
-          hover="hover:bg-neutral-500"
-          padding="p-1"
-          width="100%"
-          onClick={() => {
-            handleEdit({ ...todo, completed: !todo.completed });
-          }}
-        >
-          <MdOutlineDone
-            visibility={todo.completed ? undefined : "hidden"}
-            color="white"
-          />
-        </Button>
-        <textarea
-          // className="dark:bg-neutral-600 ml-1 p-1 px-2 w-full"
-          className={clsx(
-            "bg-inherit dark:bg-inherit m-1 p-1 px-2 w-full resize-none overflow-hidden",
-            `${isEditing ? "" : "todoInputNotInEditMode"}`
+        <div className="">
+          <Button
+            bgColor={todo.completed ? "bg-green-500" : "bg-neutral-300"}
+            hover="hover:bg-neutral-500"
+            padding="p-1"
+            width="100%"
+            onClick={() => {
+              handleEdit({ ...todo, completed: !todo.completed });
+            }}
+          >
+            <MdOutlineDone
+              visibility={todo.completed ? undefined : "hidden"}
+              color="white"
+            />
+          </Button>
+        </div>
+        <div className="flex w-full">
+          {isEditing ? (
+            <input
+              className={clsx(
+                "bg-inherit dark:bg-inherit m-1 p-1 px-2 w-full resize-none overflow-hidden break-all",
+                `${isEditing ? "" : "todoInputNotInEditMode"}`
+              )}
+              type="text"
+              value={todoText}
+              ref={ref}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setTodoText((e.target as HTMLInputElement).value);
+              }}
+            />
+          ) : (
+            <p
+              className={clsx(
+                "bg-inherit dark:bg-inherit m-1 p-1 px-2 w-full resize-none overflow-hidden break-all",
+                `${isEditing ? "" : "todoInputNotInEditMode"}`
+              )}
+            >
+              {todoText}
+            </p>
           )}
-          // type=""
-          value={todoText}
-          rows={1}
-          readOnly={!isEditing}
-          ref={ref}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            setTodoText((e.target as HTMLTextAreaElement).value);
-          }}
-        />
+        </div>
       </div>
       <div className="flex gap-1 mx-2">
         {isEditing ? (
@@ -100,7 +112,6 @@ const TodoItem = (props: TodoItemProps) => {
             bgColor=""
             onClick={() => {
               setIsEditing(true);
-              ref.current?.select();
             }}
           >
             <MdOutlineMode className="text-sky-500 dark:text-sky-400 text-lg" />
@@ -112,10 +123,8 @@ const TodoItem = (props: TodoItemProps) => {
             hover="hover:bg-yellow-100 dark:hover:bg-yellow-950 hover:rounded-lg"
             bgColor=""
             onClick={() => {
-              // if (confirm("Are you sure to exit edit mode?")) {
               setTodoText(todo.text);
               setIsEditing(false);
-              // }
             }}
           >
             <MdOutlineClose className="text-lg text-yellow-400" />

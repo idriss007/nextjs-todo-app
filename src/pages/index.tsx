@@ -1,4 +1,4 @@
-import { CreateWorldForm } from "@/components";
+import { CreateWorldForm } from "@/partials";
 import en from "@/lang/en.json";
 
 export default function Home() {

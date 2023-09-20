@@ -1,11 +1,11 @@
-import { Navbar } from "@/components";
+import { Navbar } from "@/partials";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
 import { Provider as JotaiProvider } from "jotai";
 import clsx from "clsx";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin-ext"] });
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
