@@ -53,7 +53,7 @@ function DraggableItems() {
     });
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     setTodos((prevValue) => {
       const updatedTodos = prevValue.filter((td) => {
         return td.id !== id;
