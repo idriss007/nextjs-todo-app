@@ -1,18 +1,18 @@
 import {
   Button,
+  CircularLoadingSpinner,
   DraggableItems,
   ProgressBar,
-  WorldSetttingsPopover,
 } from "@/components";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import en from "@/lang/en.json";
-import { MdAdd, MdOutlineDeleteForever } from "react-icons/md";
+import { MdAdd } from "react-icons/md";
 
 import { useAtom } from "jotai";
-import { todosAtom, todoWorldNamesAtom } from "@/helpers";
-import { LinearProgress } from "@mui/material";
-import { RESET } from "jotai/utils";
+import { generateUniqeId, todosAtom, todoWorldNamesAtom } from "@/helpers";
+import sanitizeHtml from "sanitize-html";
+import { WorldSetttingsPopover } from "@/partials";
 
 const Page = () => {
   const router = useRouter();
@@ -76,20 +76,10 @@ const Page = () => {
     }
   };
 
-  const generateUniqeId = () => {
-    return Math.floor(Math.random() * Date.now());
-  };
-
-  const deleteAllTodos = () => {
-    if (confirm(en.deleteAllTodosConfirmationMessage)) {
-      setTodos(RESET);
-    }
-  };
-
   if (!spaceName) {
     return (
-      <div className="h-screen w-full md:w-3/5 flex flex-col justify-center m-auto">
-        <LinearProgress color="inherit" />
+      <div className="h-screen w-full flex flex-col justify-center items-center">
+        <CircularLoadingSpinner />
       </div>
     );
   }
@@ -99,35 +89,24 @@ const Page = () => {
       <div className="w-full md:w-3/5">
         <div className="flex justify-between items-center">
           <p className="font-bold text-2xl">{en._todoWorld.toDo}</p>
-          {/* <Button
-            hover=""
-            padding="p-2"
-            rounded="rounded-lg"
-            bgColor="hover:bg-red-100 dark:hover:bg-red-950"
-            textColor="text-red-600 dark:text-red-400"
-            onClick={deleteAllTodos}
-          >
-            <MdOutlineDeleteForever className="text-2xl" />
-          </Button> */}
           <WorldSetttingsPopover
+            todos={todos}
             setTodos={setTodos}
             setTodoWorldNames={setTodoWorldNames}
           />
         </div>
         <hr className="border-gray-200 dark:border-stone-700 my-2" />
         <div className="mb-4 leading-8 select-none">
-          <div className="flex justify-between">
-            <p>{en._todoWorld.progressBar}</p>
-            <p>{todos.length <= 0 ? "0%" : `${completedTodosRatio}%`}</p>
-          </div>
-          <ProgressBar value={todos.length <= 0 ? 0 : completedTodosRatio} />
+          <ProgressBar
+            label="Progress"
+            value={todos.length <= 0 ? 0 : completedTodosRatio}
+          />
           <p className="text-end">
             {`${todos.filter((todo) => todo.completed === true).length}/${
               todos.length
             } completed`}
           </p>
         </div>
-        {/* )} */}
         <div className="flex flex-col max-h-72 md:max-h-96 h-72 md:h-96 overflow-y-auto overflow-x-hidden">
           <DraggableItems />
           <div ref={boxRef} />
@@ -144,7 +123,7 @@ const Page = () => {
             value={todo}
             placeholder={en._createTodo.inputPlaceholder}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              setTodo((e.target as HTMLInputElement).value)
+              setTodo(sanitizeHtml((e.target as HTMLInputElement).value))
             }
           />
           <Button

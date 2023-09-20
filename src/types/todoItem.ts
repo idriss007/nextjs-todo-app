@@ -1,5 +1,5 @@
 type TodoItem = {
-  id: number;
+  id: string;
   text: string;
   completed: boolean;
 };

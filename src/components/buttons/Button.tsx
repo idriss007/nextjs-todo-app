@@ -10,7 +10,7 @@ type ButtonProps = {
   width?: string;
   hover?: string;
   position?: string;
-  type?: "button" | "submit";
+  type?: "button" | "submit" | "reset" | undefined;
   onClick?: any;
   onMouseDown?: any;
   disabled?: boolean;

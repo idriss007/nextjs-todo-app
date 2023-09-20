@@ -1,5 +1,4 @@
 import { TodoItem } from "@/types";
-import { atom } from "jotai";
 import { atomFamily, atomWithStorage } from "jotai/utils";
 
 export const darkModeAtom = atomWithStorage<boolean>("darkMode", false);

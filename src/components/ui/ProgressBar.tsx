@@ -1,24 +1,25 @@
-import { styled } from "@mui/material/styles";
-import LinearProgress, {
-  linearProgressClasses,
-} from "@mui/material/LinearProgress";
+type ProgressBarProps = {
+  label: string;
+  value: number;
+};
 
-const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-  height: 10,
-  borderRadius: 5,
-  [`&.${linearProgressClasses.colorPrimary}`]: {
-    backgroundColor:
-      theme.palette.grey[theme.palette.mode === "light" ? 200 : 800],
-  },
-  [`& .${linearProgressClasses.bar}`]: {
-    borderRadius: 5,
-    backgroundColor: theme.palette.mode === "light" ? "#1a90ff" : "#308fe8",
-  },
-}));
+const ProgressBar = (props: ProgressBarProps) => {
+  const { value, label } = props;
 
-const ProgressBar = (props: { value: number }) => {
-  const { value } = props;
-  return <BorderLinearProgress variant="determinate" value={value} />;
+  return (
+    <>
+      <div className="flex justify-between">
+        <label>{label}</label>
+        <span className="value">{value}%</span>
+      </div>
+      <div className="h-[9px] rounded-md bg-gray-200 dark:bg-gray-800">
+        <div
+          className="h-[9px] rounded-md bg-sky-500"
+          style={{ width: value + "%", transition: "width .6s" }}
+        ></div>
+      </div>
+    </>
+  );
 };
 
 export default ProgressBar;

@@ -3,8 +3,9 @@ import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import en from "@/lang/en.json";
-import Button from "../buttons/Button";
+import Button from "../../components/buttons/Button";
 import clsx from "clsx";
+import sanitizeHtml from "sanitize-html";
 
 type CreateWorldFormProps = {
   handleClose?: any;
@@ -52,7 +53,7 @@ const CreateWorldForm = (props: CreateWorldFormProps) => {
           )}
           type="text"
           onChange={(e: React.FormEvent<HTMLInputElement>) =>
-            setWorldName((e.target as HTMLInputElement).value)
+            setWorldName(sanitizeHtml((e.target as HTMLInputElement).value))
           }
           placeholder={en._createSpace.inputPlaceholder}
         />

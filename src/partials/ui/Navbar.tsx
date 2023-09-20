@@ -1,14 +1,13 @@
 import { MdDarkMode, MdLightMode } from "react-icons/md";
-import Button from "../buttons/Button";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import en from "@/lang/en.json";
-import { CircularProgress } from "@mui/material";
-import { WorldsPopover } from "@/components";
 
 import { useAtom } from "jotai";
-import { darkModeAtom, todosAtom } from "@/helpers";
+import { darkModeAtom } from "@/helpers";
 import { todoWorldNamesAtom } from "@/helpers";
+import WorldsPopover from "../popovers/WorldsPopover";
+import { Button, CircularLoadingSpinner } from "@/components";
 
 const Navbar = () => {
   const router = useRouter();
@@ -16,7 +15,6 @@ const Navbar = () => {
 
   const [darkMode, setDarkMode] = useAtom(darkModeAtom);
   const [todoWorldNames, setTodoWorldNames] = useAtom(todoWorldNamesAtom);
-  const [todos, setTodos] = useAtom(todosAtom(spaceName));
 
   const switchTheme = () => {
     if (darkMode) {
@@ -38,14 +36,13 @@ const Navbar = () => {
           (spaceName ? (
             <p className="text-xl break-keep overflow-auto">{spaceName}</p>
           ) : (
-            <CircularProgress
-              size={25}
-              className="dark:text-white text-black"
-            />
+            <div className="flex justify-center items-center">
+              <CircularLoadingSpinner />
+            </div>
           ))}
       </div>
-      <div className="flex-1 flex justify-end items-center gap-4">
-        {todoWorldNames.length > 0 && <WorldsPopover setTodos={setTodos} />}
+      <div className="flex-1 flex items-center gap-4  justify-end">
+        {todoWorldNames.length > 0 && <WorldsPopover />}
 
         <Button padding="p-0" bgColor="inherit" hover="" onClick={switchTheme}>
           {darkMode ? (
