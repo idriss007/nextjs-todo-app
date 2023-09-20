@@ -15,7 +15,7 @@ const ProgressBar = (props: ProgressBarProps) => {
       <div className="h-[9px] rounded-md bg-gray-200 dark:bg-gray-800">
         <div
           className="h-[9px] rounded-md bg-sky-500"
-          style={{ width: value + "%", transition: "width .6s" }}
+          style={{ width: value + "%", transition: "width .3s" }}
         ></div>
       </div>
     </>

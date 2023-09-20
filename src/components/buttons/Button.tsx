@@ -15,6 +15,8 @@ type ButtonProps = {
   onMouseDown?: any;
   disabled?: boolean;
   className?: string;
+  outline?: string;
+  border?: string;
 };
 
 const Button = (props: ButtonProps) => {
@@ -30,6 +32,8 @@ const Button = (props: ButtonProps) => {
     position,
     type = "button",
     className,
+    outline = "outline-none",
+    border = "border-none",
     ...rest
   } = props;
 
@@ -44,6 +48,8 @@ const Button = (props: ButtonProps) => {
         width,
         hover,
         position,
+        outline,
+        border,
         className
       )}
       type={type}
