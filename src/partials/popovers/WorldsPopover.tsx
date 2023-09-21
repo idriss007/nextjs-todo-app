@@ -37,7 +37,7 @@ const WorldsPopover = () => {
       </div>
 
       <Menu.Items className="absolute z-10 left-[50%] translate-x-[-50%] mt-1 outline-none border-none">
-        <div className="flex flex-col min-w-[139px] max-w-[139px] max-h-[200px] min-h-[200px] overflow-y-auto overflow-x-hidden">
+        <div className="flex flex-col min-w-[139px] max-w-[139px] max-h-[200px] min-h-[200px] overflow-y-scroll overflow-x-hidden">
           {todoWorldNames.map((todoWorld, i) => (
             <Menu.Item as="a" key={i}>
               <Button
