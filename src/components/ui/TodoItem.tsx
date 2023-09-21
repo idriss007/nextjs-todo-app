@@ -9,6 +9,7 @@ import Button from "../buttons/Button";
 import { useRef, useState, useEffect } from "react";
 import en from "@/lang/en.json";
 import clsx from "clsx";
+import { confirm } from "../confirm";
 
 type TodoItemProps = {
   todo: TodoItem;
@@ -27,9 +28,6 @@ const TodoItem = (props: TodoItemProps) => {
   useEffect(() => {
     if (ref.current) {
       ref.current.select();
-      // ref.current.style.height = "0px";
-      // const scrollHeight = ref.current?.scrollHeight;
-      // ref.current.style.height = scrollHeight + "px";
     }
   }, [ref, isEditing]);
 
@@ -90,7 +88,12 @@ const TodoItem = (props: TodoItemProps) => {
             bgColor=""
             disabled={todo.text == todoText || todoText.length <= 0}
             onClick={() => {
-              if (confirm(en.editConfirmationMessage)) {
+              if (
+                //@ts-ignore
+                confirm({
+                  confirmation: en._confirmation.editConfirmationMessage,
+                })
+              ) {
                 handleEdit({ ...todo, text: todoText });
                 setIsEditing(false);
               }
@@ -135,7 +138,12 @@ const TodoItem = (props: TodoItemProps) => {
             hover="hover:bg-red-100 dark:hover:bg-red-950 hover:rounded-lg"
             bgColor=""
             onClick={() => {
-              if (confirm(en.deleteConfirmationMessage)) {
+              if (
+                //@ts-ignore
+                confirm({
+                  confirmation: en._confirmation.deleteConfirmationMessage,
+                })
+              ) {
                 handleDelete(todo.id);
               }
             }}
