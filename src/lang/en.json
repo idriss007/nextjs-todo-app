@@ -12,8 +12,12 @@
     "progressBar": "Progress",
     "toDo": "To-Do"
   },
-  "editConfirmationMessage": "Are you sure about editing to-do?",
-  "deleteConfirmationMessage": "Are you sure about deleting to-do?",
-  "deleteWorldConfirmationMessage": "Are you sure about deleting to-do world?",
-  "deleteAllTodosConfirmationMessage": "Are you sure about deleting all to-dos?"
+  "_confirmation": {
+    "cancel": "Cancel",
+    "ok": "OK",
+    "editConfirmationMessage": "Are you sure about editing to-do?",
+    "deleteConfirmationMessage": "Are you sure about deleting to-do?",
+    "deleteWorldConfirmationMessage": "Are you sure about deleting to-do world?",
+    "deleteAllTodosConfirmationMessage": "Are you sure about deleting all to-dos?"
+  }
 }

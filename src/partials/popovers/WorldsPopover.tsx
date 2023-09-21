@@ -20,7 +20,11 @@ const WorldsPopover = () => {
 
   return (
     <Menu as="div" className="relative inline-block text-left">
-      <Modal open={openModal} setOpen={setOpenModal}>
+      <Modal
+        title="Create your own special to-dos world"
+        open={openModal}
+        setOpen={setOpenModal}
+      >
         <CreateWorldForm handleClose={handleClose} margin="mb-5" />
       </Modal>
       <div className="flex justify-center items-center">
@@ -33,7 +37,7 @@ const WorldsPopover = () => {
       </div>
 
       <Menu.Items className="absolute z-10 left-[50%] translate-x-[-50%] mt-1 outline-none border-none">
-        <div className="flex flex-col min-w-[133px] max-w-[133px]">
+        <div className="flex flex-col min-w-[139px] max-w-[139px] max-h-[200px] min-h-[200px] overflow-y-auto overflow-x-hidden rounded-[4px]">
           {todoWorldNames.map((todoWorld, i) => (
             <Menu.Item as="a" key={i}>
               <Button

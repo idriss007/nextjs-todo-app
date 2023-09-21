@@ -17,6 +17,7 @@ type ButtonProps = {
   className?: string;
   outline?: string;
   border?: string;
+  focus?: string;
 };
 
 const Button = (props: ButtonProps) => {
@@ -27,13 +28,14 @@ const Button = (props: ButtonProps) => {
     padding = "p-2",
     height = "h-fit",
     width = "w-fit",
-    hover = "dark:hover:bg-gray-200 hover:bg-gray-800 active:dark:bg-gray-300 active:bg-gray-700 focus:outline-none focus:dark:outline-none focus:ring focus:dark:ring focus:dark:ring-gray-500 focus:ring-gray-300",
+    hover = "dark:hover:bg-gray-200 hover:bg-gray-800 active:dark:bg-gray-300 active:bg-gray-700 focus:outline-none focus:dark:outline-none",
     children,
     position,
     type = "button",
     className,
+    border,
     outline = "outline-none",
-    border = "border-none",
+    focus = "border-none",
     ...rest
   } = props;
 
@@ -49,6 +51,7 @@ const Button = (props: ButtonProps) => {
         hover,
         position,
         outline,
+        focus,
         border,
         className
       )}

@@ -10,6 +10,8 @@ import {
 } from "react-icons/md";
 import en from "@/lang/en.json";
 import { TodoItem } from "@/types";
+import { confirm } from "@/components";
+import { useState } from "react";
 
 type WorldsPopoverProps = {
   todos: TodoItem[];
@@ -25,8 +27,13 @@ const WorldsPopover = (props: WorldsPopoverProps) => {
 
   //   const [todoWorldNames, setTodoWorldNames] = useAtom(todoWorldNamesAtom);
 
-  const deleteAllTodos = () => {
-    if (confirm(en.deleteAllTodosConfirmationMessage)) {
+  const deleteAllTodos = async () => {
+    //@ts-ignore
+    const confirmResult = await confirm({
+      confirmation: en._confirmation.deleteAllTodosConfirmationMessage,
+    });
+
+    if (confirmResult) {
       setTodos(RESET);
     }
   };
@@ -43,7 +50,7 @@ const WorldsPopover = (props: WorldsPopoverProps) => {
       </div>
 
       <Menu.Items className="absolute z-10 right-0 md:right-auto md:left-[50%] md:translate-x-[-50%] mt-1 outline-none border-none">
-        <div className="flex flex-col min-w-[170px] max-w-[170px] outline-none border-none">
+        <div className="flex flex-col min-w-[170px] max-w-[170px] outline-none border-none overflow-hidden rounded-[4px]">
           <Menu.Item as="a" key="1">
             <Button
               bgColor="hover:bg-stone-400 bg-stone-800 dark:hover:bg-stone-200"
@@ -77,8 +84,14 @@ const WorldsPopover = (props: WorldsPopoverProps) => {
               padding="py-2 px-4"
               hover=""
               rounded="none"
-              onClick={() => {
-                if (confirm(en.deleteWorldConfirmationMessage)) {
+              onClick={async () => {
+                if (
+                  //@ts-ignore
+                  await confirm({
+                    confirmation:
+                      en._confirmation.deleteWorldConfirmationMessage,
+                  })
+                ) {
                   setTodoWorldNames((prevValue: string[]) => {
                     const updatedTodoWorlds = prevValue.filter(
                       (oldTodoWorld) => oldTodoWorld !== spaceName

@@ -10,10 +10,11 @@ import sanitizeHtml from "sanitize-html";
 type CreateWorldFormProps = {
   handleClose?: any;
   margin?: string;
+  title?: string;
 };
 
 const CreateWorldForm = (props: CreateWorldFormProps) => {
-  const { handleClose, margin } = props;
+  const { handleClose, margin, title } = props;
 
   const router = useRouter();
 
@@ -44,7 +45,7 @@ const CreateWorldForm = (props: CreateWorldFormProps) => {
 
   return (
     <div>
-      <p className={clsx("text-xl text-center", margin)}>{en.appDesc}</p>
+      {title && <p className={clsx("text-xl text-center", margin)}>{title}</p>}
       <form className="flex gap-3" action="" onSubmit={handleSubmit}>
         <input
           className={clsx(
