@@ -1,8 +1,6 @@
 import { TodoItem } from "@/types";
 import { atomFamily, atomWithStorage } from "jotai/utils";
 
-export const darkModeAtom = atomWithStorage<boolean>("darkMode", false);
-
 export const todosAtom = atomFamily((slug: string) => {
   return atomWithStorage<TodoItem[]>(`todo_${slug}`, []);
 });

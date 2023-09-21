@@ -4,26 +4,27 @@ import Link from "next/link";
 import en from "@/lang/en.json";
 
 import { useAtom } from "jotai";
-import { darkModeAtom } from "@/helpers";
 import { todoWorldNamesAtom } from "@/helpers";
 import WorldsPopover from "../popovers/WorldsPopover";
 import { Button, CircularLoadingSpinner } from "@/components";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const router = useRouter();
   const spaceName = router.query.id as string;
 
-  const [darkMode, setDarkMode] = useAtom(darkModeAtom);
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme, theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const [todoWorldNames, setTodoWorldNames] = useAtom(todoWorldNamesAtom);
 
   const switchTheme = () => {
-    if (darkMode) {
-      document.documentElement.classList.remove("dark");
-      setDarkMode(false);
-      return;
-    }
-    document.documentElement.classList.add("dark");
-    setDarkMode(true);
+    setTheme(resolvedTheme === "light" ? "dark" : "light");
   };
 
   return (
@@ -45,10 +46,10 @@ const Navbar = () => {
         {todoWorldNames.length > 0 && <WorldsPopover />}
 
         <Button padding="p-0" bgColor="inherit" hover="" onClick={switchTheme}>
-          {darkMode ? (
-            <MdLightMode color="white" size={25} />
-          ) : (
+          {mounted && resolvedTheme === "light" ? (
             <MdDarkMode color="black" size={25} />
+          ) : (
+            <MdLightMode color="white" size={25} />
           )}
         </Button>
       </div>

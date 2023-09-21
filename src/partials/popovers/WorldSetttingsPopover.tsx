@@ -31,8 +31,6 @@ const WorldsPopover = (props: WorldsPopoverProps) => {
     }
   };
 
-  console.log(todos.length);
-
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div className="flex justify-center items-center">
