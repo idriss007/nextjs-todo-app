@@ -11,7 +11,6 @@ import {
 import en from "@/lang/en.json";
 import { TodoItem } from "@/types";
 import { confirm } from "@/components";
-import { useState } from "react";
 
 type WorldsPopoverProps = {
   todos: TodoItem[];
@@ -24,8 +23,6 @@ const WorldsPopover = (props: WorldsPopoverProps) => {
 
   const router = useRouter();
   const spaceName = router.query.id as string;
-
-  //   const [todoWorldNames, setTodoWorldNames] = useAtom(todoWorldNamesAtom);
 
   const deleteAllTodos = async () => {
     //@ts-ignore

@@ -87,10 +87,10 @@ const TodoItem = (props: TodoItemProps) => {
             }`}
             bgColor=""
             disabled={todo.text == todoText || todoText.length <= 0}
-            onClick={() => {
+            onClick={async () => {
               if (
                 //@ts-ignore
-                confirm({
+                await confirm({
                   confirmation: en._confirmation.editConfirmationMessage,
                 })
               ) {
@@ -137,10 +137,10 @@ const TodoItem = (props: TodoItemProps) => {
             padding="p-2"
             hover="hover:bg-red-100 dark:hover:bg-red-950 hover:rounded-lg"
             bgColor=""
-            onClick={() => {
+            onClick={async () => {
               if (
                 //@ts-ignore
-                confirm({
+                await confirm({
                   confirmation: en._confirmation.deleteConfirmationMessage,
                 })
               ) {

@@ -12,7 +12,7 @@ export default function Home() {
     .slice(0, 4);
 
   return (
-    <div className="w-fit mr-auto max-w-fit ml-auto flex flex-col flex-1 justify-center items-center mt-14">
+    <div className="w-fit mr-auto max-w-fit ml-auto flex flex-col flex-1 justify-center items-center">
       <p className="text-5xl font-bold text-center">{en.appTitle}</p>
       <CreateWorldForm title={en.appDesc} margin="mb-5 mt-10" />
       {editedTodoWorldNames?.length > 0 && (
