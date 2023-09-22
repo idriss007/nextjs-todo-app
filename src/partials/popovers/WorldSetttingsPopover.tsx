@@ -49,8 +49,8 @@ const WorldsPopover = (props: WorldsPopoverProps) => {
         </Menu.Button>
       </div>
 
-      <Menu.Items className="absolute z-10 right-0 md:right-auto md:left-[50%] md:translate-x-[-50%] mt-1 outline-none border-none">
-        <div className="flex flex-col min-w-[170px] max-w-[170px] outline-none border-none overflow-hidden rounded-[4px]">
+      <Menu.Items className="absolute z-10 right-0 md:right-auto md:left-[50%] md:translate-x-[-50%] mt-1 outline-none border-none drop-shadow-xl shadow-xl">
+        <div className="flex flex-col min-w-[170px] max-w-[170px] outline-none border-none">
           <Menu.Item as="a" key="1">
             <Button
               bgColor="hover:bg-stone-400 bg-stone-800 dark:hover:bg-stone-200"
