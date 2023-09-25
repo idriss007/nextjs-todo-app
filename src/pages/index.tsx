@@ -3,6 +3,7 @@ import en from "@/lang/en.json";
 import { TodoWorldItem } from "@/components";
 import { useAtom } from "jotai";
 import { todoWorldNamesAtom } from "@/helpers";
+import Head from "next/head";
 
 export default function Home() {
   const [todoWorldNames, setTodoWorldNames] = useAtom(todoWorldNamesAtom);
@@ -13,6 +14,9 @@ export default function Home() {
 
   return (
     <div className="w-fit mr-auto max-w-fit ml-auto flex flex-col flex-1 justify-center items-center">
+      <Head>
+        <title>{en.appTitle}</title>
+      </Head>
       <p className="text-5xl font-bold text-center">{en.appTitle}</p>
       <CreateWorldForm title={en.appDesc} margin="mb-5 mt-10" />
       {editedTodoWorldNames?.length > 0 && (

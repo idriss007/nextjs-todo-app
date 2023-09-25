@@ -13,6 +13,7 @@ import { useAtom } from "jotai";
 import { generateUniqeId, todosAtom, todoWorldNamesAtom } from "@/helpers";
 import sanitizeHtml from "sanitize-html";
 import { WorldSetttingsPopover } from "@/partials";
+import Head from "next/head";
 
 const Page = () => {
   const router = useRouter();
@@ -86,6 +87,9 @@ const Page = () => {
 
   return (
     <div className="flex flex-col flex-1 items-center mt-5">
+      <Head>
+        <title>{spaceName}</title>
+      </Head>
       <div className="w-full md:w-3/5">
         <div className="flex justify-between items-center">
           <p className="font-bold text-2xl">{en._todoWorld.toDo}</p>

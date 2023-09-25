@@ -1,4 +1,3 @@
-import React from "react";
 import Modal from "../modals/Modal";
 import Button from "../buttons/Button";
 import { confirmable } from "react-confirm";
