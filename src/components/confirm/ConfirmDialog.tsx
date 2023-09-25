@@ -4,13 +4,13 @@ import { confirmable } from "react-confirm";
 import en from "@/lang/en.json";
 
 type ConfirmationProps = {
-  show: boolean;
+  show?: boolean;
   confirmation: string;
-  proceed: (status: boolean) => void;
+  proceed?: (status: boolean) => void;
 };
 
 const ConfirmDialog = confirmable((props: ConfirmationProps) => {
-  const { show, confirmation, proceed } = props;
+  const { show = false, confirmation, proceed = () => {} } = props;
 
   return (
     <Modal open={show} setOpen={() => proceed(false)}>

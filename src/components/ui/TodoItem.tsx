@@ -89,7 +89,6 @@ const TodoItem = (props: TodoItemProps) => {
             disabled={todo.text == todoText || todoText.length <= 0}
             onClick={async () => {
               if (
-                //@ts-ignore
                 await confirm({
                   confirmation: en._confirmation.editConfirmationMessage,
                 })
@@ -139,7 +138,6 @@ const TodoItem = (props: TodoItemProps) => {
             bgColor=""
             onClick={async () => {
               if (
-                //@ts-ignore
                 await confirm({
                   confirmation: en._confirmation.deleteConfirmationMessage,
                 })

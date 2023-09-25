@@ -25,7 +25,6 @@ const WorldsPopover = (props: WorldsPopoverProps) => {
   const spaceName = router.query.id as string;
 
   const deleteAllTodos = async () => {
-    //@ts-ignore
     const confirmResult = await confirm({
       confirmation: en._confirmation.deleteAllTodosConfirmationMessage,
     });
@@ -83,7 +82,6 @@ const WorldsPopover = (props: WorldsPopoverProps) => {
               rounded="none"
               onClick={async () => {
                 if (
-                  //@ts-ignore
                   await confirm({
                     confirmation:
                       en._confirmation.deleteWorldConfirmationMessage,
